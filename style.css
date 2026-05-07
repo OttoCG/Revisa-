@@ -1,0 +1,51 @@
+body {
+    margin: 0; /*tirar margem base do html*/
+}
+
+.main-login{
+    width: 100vw;  /*viewport width - 100vw é 100% da tela em horizontal*/
+    height: 100vh; /*viewport height  - 100vh é 100% da tela em vertical*/
+    background: #201b2c;
+    display: flex; /* deixar div lado a lado*/
+    justify-content: center; /* centraliza no eixo X para o centro*/
+    align-items: center;
+}
+
+.left-login{
+    width: 50vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; /* deixa um ao lado do outro em coluna*/
+}
+
+.left-login > h1 { /* chamar só os H1 dentro da left-login */
+    color: #77ffc0;
+}
+
+.right-login{
+    width: 50vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-login{
+    width: 60%; /* % pega referente ao total da DIV que ela está */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 30px 35px;  /* margens dentro do componente, eixo Y e X */
+    background: #2f2841;
+    border-radius: 20px; /* borca da DIV arredondada */
+    box-shadow: 0px 10px 40px #00000056; /* sombra do card, primeiro valor X, segundo para cima, negativo para cima, terceiro valor blur, quarto é cor */
+}
+
+.card-login > h1 {
+    color: #00ff88;
+    font-weight: 800; /* grossura da fonte */
+    margin: 0;
+}
