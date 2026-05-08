@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Document</title>
+    <link rel="stylesheet" href="stylelogin.css">
+    <title>Revisa+</title>
 </head>
 <body>
     <div class="main-login">
         <div class="left-login">
             <h1>Revisa+<br>E melhore seus conhecimentos! </h1>
+            <img src="https://i.ibb.co/4nTkVWV2/revisa.png" class="revisa+foto" alt="Revisa+">
         </div>
         <div class="right-login">
             <div class="card-login">
-                <h1>Bem-Vindo</h1>
+                <h1>Bem-Vindo</h1><br>
                 <div class="textfield">
                     <label for="usuario">Usuário</label>
                     <input type="text" name="usuario" placeholder="Usuário">
@@ -21,9 +22,17 @@
                     <label for="senha">Senha</label>
                     <input type="password" name="senha" placeholder="Senha">
                 </div>    
-                <button class="btn-login">Login</button>
+                <div class="button-container">
+                    <button class="btn-login">Login</button>
+                    <button class="btn-register">Registrar</button>
+                </div>
             </div>
         </div>
     </div>
+    <script>
+        document.querySelector(".btn-login").addEventListener("click", function() {
+        window.location.href = "telamenu.html";
+        });
+    </script>
 </body>
 </html>

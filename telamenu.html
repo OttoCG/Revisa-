@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Revisa+</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="styleMenu.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- SIDEBAR -->
+
+  <aside class="sidebar">
+
+    <div>
+
+      <div class="logo">
+        <h1>Revisa+</h1>
+        <p>E melhore seus conhecimentos!</p>
+      </div>
+
+      <nav class="menu">
+
+        <ul>
+
+          <li class="active">🏠 Início</li>
+
+          <li id="area-aluno2">👤 Área do aluno</li>
+          <script>
+            document.getElementById("area-aluno2").addEventListener("click", function() {
+              window.location.href = "TelaAreaDoAluno.html";
+            });
+        </script>
+
+          <li>📝 Avaliação Diagnóstica</li>
+
+          <li>📖 Revisar</li>
+
+          <li>📈 Progresso de Aprendizagem</li>
+
+          <li>ℹ️ Sobre</li>
+
+          <li>⚙️ Configurações</li>
+
+        </ul>
+
+      </nav>
+
+    </div>
+
+    <button class="logout">
+      ↩ Sair
+    </button>
+
+  </aside>
+
+  <!-- CONTEÚDO -->
+
+  <main class="content">
+
+    <header class="topbar">
+
+      <div></div>
+
+      <div class="user">
+
+        <div class="user-text">
+          <h3>Olá, Aluno!</h3>
+          <p>Bem-vindo de volta.</p>
+        </div>
+
+        <div class="avatar">
+          👤
+        </div>
+
+      </div>
+
+    </header>
+
+    <section class="welcome">
+
+      <h2>Bem-vindo ao Revisa+!</h2>
+
+      <p>
+        Escolha uma opção abaixo para continuar seus estudos.
+      </p>
+
+    </section>
+
+    <!-- CARDS -->
+
+    <section class="cards">
+
+      <div id="area-aluno1" class="card">
+        <div class="icon">👤</div>
+        <h3>Área do aluno</h3>
+        <p>Acesse seus dados e materiais personalizados.</p>
+      </div>
+      <script>
+        document.getElementById("area-aluno1").addEventListener("click", function() {
+          window.location.href = "TelaAreaDoAluno.html";
+        });
+    </script>
+
+      <div class="card">
+        <div class="icon">📝</div>
+        <h3>Avaliação Diagnóstica</h3>
+        <p>Receba recomendações personalizadas.</p>
+      </div>
+
+      <div class="card">
+        <div class="icon">📖</div>
+        <h3>Revisar</h3>
+        <p>Revise conteúdos importantes.</p>
+      </div>
+
+      <div class="card">
+        <div class="icon">📈</div>
+        <h3>Progresso de Aprendizagem</h3>
+        <p>Acompanhe sua evolução.</p>
+      </div>
+
+      <div class="card">
+        <div class="icon">ℹ️</div>
+        <h3>Sobre</h3>
+        <p>Conheça mais sobre o projeto.</p>
+      </div>
+
+      <div class="card">
+        <div class="icon">⚙️</div>
+        <h3>Configurações</h3>
+        <p>Personalize sua experiência.</p>
+      </div>
+
+    </section>
+
+    <footer>
+      © 2026 Revisa+. Todos os direitos reservados.
+    </footer>
+
+  </main>
+
+</div>
+
+</body>
+</html>
