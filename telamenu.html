@@ -33,24 +33,19 @@
 
         <ul>
 
-          <li class="active">🏠 Início</li>
+          <li class="active"><a href="telamenu.html">🏠 Início</a></li>
 
-          <li id="area-aluno2">👤 Área do aluno</li>
-          <script>
-            document.getElementById("area-aluno2").addEventListener("click", function() {
-              window.location.href = "TelaAreaDoAluno.html";
-            });
-        </script>
+          <li><a href="TelaAreaDoAluno.html">👤 Área do aluno</a></li>
 
-          <li>📝 Avaliação Diagnóstica</li>
+          <li><a href="TelaAvaliaçãoDiagnóstica.html">📝 Avaliação Diagnóstica</a></li>
 
-          <li>📖 Revisar</li>
+          <li><a href="#">📖 Revisar</a></li>
 
-          <li>📈 Progresso de Aprendizagem</li>
+          <li><a href="#">📈 Progresso de Aprendizagem</a></li>
 
-          <li>ℹ️ Sobre</li>
+          <li><a href="TelaSobre.html">ℹ️ Sobre</a></li>
 
-          <li>⚙️ Configurações</li>
+          <li><a href="TelaConfiguracoes.html">⚙️ Configurações</a></li>
 
         </ul>
 
@@ -58,7 +53,7 @@
 
     </div>
 
-    <button class="logout">
+    <button class="logout" onclick="location.href='telalogin.html'">
       ↩ Sair
     </button>
 
@@ -101,18 +96,13 @@
 
     <section class="cards">
 
-      <div id="area-aluno1" class="card">
+      <div id="area-aluno1" class="card" onclick="location.href='TelaAreaDoAluno.html'">
         <div class="icon">👤</div>
         <h3>Área do aluno</h3>
         <p>Acesse seus dados e materiais personalizados.</p>
       </div>
-      <script>
-        document.getElementById("area-aluno1").addEventListener("click", function() {
-          window.location.href = "TelaAreaDoAluno.html";
-        });
-    </script>
 
-      <div class="card">
+      <div id="AvaliacaoDiagnostica" class="card" onclick="location.href='TelaAvaliaçãoDiagnóstica.html'">
         <div class="icon">📝</div>
         <h3>Avaliação Diagnóstica</h3>
         <p>Receba recomendações personalizadas.</p>
@@ -130,13 +120,13 @@
         <p>Acompanhe sua evolução.</p>
       </div>
 
-      <div class="card">
+      <div id="Sobre" class="card" onclick="location.href='TelaSobre.html'">
         <div class="icon">ℹ️</div>
         <h3>Sobre</h3>
         <p>Conheça mais sobre o projeto.</p>
       </div>
 
-      <div class="card">
+      <div id="configuracoes" class="card" onclick="location.href='TelaConfiguracoes.html'">
         <div class="icon">⚙️</div>
         <h3>Configurações</h3>
         <p>Personalize sua experiência.</p>

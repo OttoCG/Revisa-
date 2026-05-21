@@ -1,0 +1,255 @@
+/* Estilos específicos para a tela de Configurações, mantendo paleta do site */
+
+body.light-mode{
+    background:#eef2ff;
+    color:#111;
+}
+
+body.light-mode .sidebar{
+    background:linear-gradient(180deg, #f5f7ff, #d8e0ff);
+}
+
+body.light-mode .logo h1,
+body.light-mode .logo p,
+body.light-mode .menu li,
+body.light-mode .menu li a,
+body.light-mode .logout,
+body.light-mode .btn-cancel,
+body.light-mode .small-btn,
+body.light-mode .danger-btn{
+    color:#111;
+}
+
+body.light-mode .sidebar {
+    border-color:rgba(17,24,39,0.08);
+}
+
+body.light-mode .settings-card,
+body.light-mode .card,
+body.light-mode .save-status{
+    background:rgba(255,255,255,0.95);
+    border-color:rgba(17,24,39,0.08);
+}
+
+body.light-mode .card h2,
+body.light-mode .settings-card h2{
+    color:#2f45bb;
+}
+
+body.light-mode .setting-row input[type="text"],
+body.light-mode .setting-row input[type="email"],
+body.light-mode .setting-row select{
+    background:#f8f9ff;
+    color:#111;
+    border-color:rgba(17,24,39,0.15);
+}
+
+body.light-mode .btn-save{
+    background:#2f45bb;
+    color:#fff;
+}
+
+body.light-mode .menu li:hover,
+body.light-mode .menu li.active{
+    background:#c2d2ff;
+    color:#111;
+}
+
+body.large-font{
+    font-size:1.05rem;
+}
+
+body.small-font{
+    font-size:0.95rem;
+}
+
+.settings-card{
+    background:#1d1f39;
+    border-radius:24px;
+    padding:28px;
+    margin-bottom:24px;
+    border:1px solid rgba(255,255,255,0.08);
+    box-shadow:0 14px 40px rgba(0,0,0,0.12);
+}
+
+.settings-card h2{
+    color:#52ffbe;
+    margin-bottom:18px;
+    font-size:26px;
+}
+
+.settings-form{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+.setting-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:14px;
+    flex-wrap:wrap;
+}
+
+.setting-row label{
+    color:#d0d0d0;
+    font-size:16px;
+    flex:1 1 240px;
+    min-width:180px;
+}
+
+.setting-row input[type="text"],
+.setting-row input[type="email"],
+.setting-row select{
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.12);
+    color:#fff;
+    padding:14px 16px;
+    border-radius:14px;
+    min-width:240px;
+    flex:1 1 260px;
+}
+
+.setting-row input[type="text"]:focus,
+.setting-row input[type="email"]:focus,
+.setting-row select:focus{
+    outline:none;
+    border-color:#52ffbe;
+    box-shadow:0 0 0 4px rgba(82,255,190,0.12);
+}
+
+.small-btn,
+.danger-btn,
+.btn-save,
+.btn-cancel{
+    min-width:180px;
+}
+
+.small-btn{
+    background:transparent;
+    border:1px solid rgba(255,255,255,0.12);
+    color:#52ffbe;
+    padding:12px 16px;
+    border-radius:14px;
+    cursor:pointer;
+    transition:all .25s ease;
+}
+
+.small-btn:hover{
+    background:rgba(82,255,190,0.1);
+}
+
+.danger-btn{
+    background:rgba(255,0,0,0.08);
+    border:1px solid rgba(255,0,0,0.25);
+    color:#ff7b7b;
+    padding:12px 16px;
+    border-radius:14px;
+    cursor:pointer;
+    transition:all .25s ease;
+}
+
+.danger-btn:hover{
+    background:rgba(255,0,0,0.12);
+}
+
+.actions{
+    display:flex;
+    gap:16px;
+    margin-top:24px;
+    flex-wrap:wrap;
+}
+
+.btn-save{
+    background:#52ffbe;
+    color:#081017;
+    border:none;
+    padding:14px 24px;
+    border-radius:16px;
+    cursor:pointer;
+    box-shadow:0 18px 40px rgba(82,255,190,0.16);
+    transition:transform .2s ease;
+}
+
+.btn-save:hover{
+    transform:translateY(-2px);
+}
+
+.btn-cancel{
+    background:transparent;
+    border:1px solid rgba(255,255,255,0.12);
+    color:#fff;
+    padding:14px 24px;
+    border-radius:16px;
+    cursor:pointer;
+}
+
+.save-status{
+    margin-top:14px;
+    min-height:24px;
+    color:#c7f8e0;
+    font-weight:600;
+}
+
+.save-status.success{
+    color:#a3ffcb;
+}
+
+.save-status.error{
+    color:#ffb3b3;
+}
+
+.card{
+    border-radius:24px;
+    background:#1d1f39;
+    padding:24px;
+    border:1px solid rgba(255,255,255,0.08);
+    box-shadow:0 12px 24px rgba(0,0,0,0.12);
+}
+
+.card h2{
+    margin-bottom:14px;
+    color:#52ffbe;
+    font-size:22px;
+}
+
+.card p,
+.card li{
+    color:#d0d0d0;
+    line-height:1.7;
+}
+
+.card ul{
+    list-style:disc inside;
+    margin-top:10px;
+}
+
+.main-grid{
+    display:grid;
+    grid-template-columns:1.5fr 1fr;
+    gap:24px;
+}
+
+.left{ }
+.right{ }
+
+@media(max-width:1100px){
+    .main-grid{grid-template-columns:1fr}
+}
+
+@media(max-width:900px){
+    .setting-row{
+        justify-content:flex-start;
+    }
+    .setting-row label,
+    .setting-row input[type="text"],
+    .setting-row input[type="email"],
+    .setting-row select{
+        min-width:100%;
+        flex:1 1 100%;
+    }
+    .actions{
+        justify-content:center;
+    }
+}

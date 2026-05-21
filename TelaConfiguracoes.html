@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configurações - Revisa+</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link rel="stylesheet" href="stylemenu.css">
+  <link rel="stylesheet" href="styleConfiguracoes.css">
+
+</head>
+<body>
+
+<div class="container">
+
+  <!-- SIDEBAR -->
+
+  <aside class="sidebar">
+
+    <div>
+
+      <div class="logo">
+        <h1>Revisa+</h1>
+        <p>E melhore seus conhecimentos!</p>
+      </div>
+
+      <nav class="menu">
+
+        <ul>
+
+          <li><a href="telamenu.html">🏠 Início</a></li>
+
+          <li><a href="TelaAreaDoAluno.html">👤 Área do aluno</a></li>
+
+          <li><a href="TelaAvaliaçãoDiagnóstica.html">📝 Avaliação Diagnóstica</a></li>
+
+          <li><a href="#">📖 Revisar</a></li>
+
+          <li><a href="#">📈 Progresso</a></li>
+
+          <li><a href="TelaSobre.html">ℹ️ Sobre</a></li>
+
+          <li class="active"><a href="TelaConfiguracoes.html">⚙️ Configurações</a></li>
+
+        </ul>
+
+      </nav>
+
+    </div>
+
+    <button class="logout" onclick="location.href='telalogin.html'">
+      ↩ Sair
+    </button>
+
+  </aside>
+
+  <!-- CONTENT -->
+
+  <main class="content">
+
+    <header class="topbar">
+
+      <div></div>
+
+      <div class="user">
+
+        <div class="user-text">
+          <h3>Olá, Aluno!</h3>
+          <p>Gerencie suas preferências.</p>
+        </div>
+
+        <div class="avatar">
+          👤
+        </div>
+
+      </div>
+
+    </header>
+
+    <section class="welcome">
+
+      <h2>Configurações</h2>
+
+      <p>
+        Ajuste sua conta, aparência e preferências de estudo.
+      </p>
+
+    </section>
+
+    <section class="main-grid">
+
+      <div class="left">
+
+        <div class="card settings-card">
+
+          <h2>Conta</h2>
+
+          <div class="settings-form">
+
+            <div class="setting-row">
+              <label for="user-name">Nome</label>
+              <input id="user-name" type="text" value="Lucas Oliveira" placeholder="Digite seu nome">
+            </div>
+
+            <div class="setting-row">
+              <label for="user-email">Email</label>
+              <input id="user-email" type="email" value="lucas.oliveira@email.com" placeholder="Digite seu email">
+            </div>
+
+            <div class="setting-row">
+              <label>Senha</label>
+              <button id="change-password" class="small-btn" type="button">Alterar senha</button>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="card settings-card">
+
+          <h2>Notificações</h2>
+
+          <div class="settings-form">
+
+            <div class="setting-row">
+              <label for="email-notifications">Notificações por email</label>
+              <label class="switch">
+                <input id="email-notifications" type="checkbox">
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <div class="setting-row">
+              <label for="activity-notifications">Notificações de atividades</label>
+              <label class="switch">
+                <input id="activity-notifications" type="checkbox">
+                <span class="slider"></span>
+              </label>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="card settings-card">
+
+          <h2>Aparência</h2>
+
+          <div class="settings-form">
+
+            <div class="setting-row">
+              <label for="theme-select">Tema</label>
+              <select id="theme-select">
+                <option value="dark">Escuro (padrão)</option>
+                <option value="light">Claro</option>
+              </select>
+            </div>
+
+            <div class="setting-row">
+              <label for="font-select">Tamanho da fonte</label>
+              <select id="font-select">
+                <option value="normal">Padrão</option>
+                <option value="large">Maior</option>
+                <option value="small">Menor</option>
+              </select>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="card settings-card">
+
+          <h2>Privacidade</h2>
+
+          <div class="settings-form">
+
+            <div class="setting-row">
+              <label for="share-progress">Compartilhar progresso anônimo</label>
+              <label class="switch">
+                <input id="share-progress" type="checkbox">
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <div class="setting-row">
+              <label>Excluir conta</label>
+              <button id="delete-account" class="danger-btn" type="button">Excluir minha conta</button>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="actions">
+          <button id="save-settings" class="btn-save" type="button">Salvar alterações</button>
+          <button class="btn-cancel" onclick="location.href='telamenu.html'" type="button">Cancelar</button>
+        </div>
+
+        <div id="save-status" class="save-status"></div>
+
+      </div>
+
+      <div class="right">
+
+        <div class="card">
+          <h2>Ajuda rápida</h2>
+          <p>Precisa de ajuda? Consulte a seção Sobre ou entre em contato conosco!</p>
+        </div>
+
+        <div class="card">
+          <h2>Atalhos</h2>
+          <ul>
+            <li>Colete pontos concluindo avaliações</li>
+            <li>Mantenha sequência para bônus</li>
+          </ul>
+        </div>
+
+      </div>
+
+    </section>
+
+    <footer>
+      © 2026 Revisa+. Todos os direitos reservados.
+    </footer>
+
+  </main>
+
+</div>
+
+<script>
+  const STORAGE_KEY = 'revisa_settings';
+
+  const elements = {
+    name: document.getElementById('user-name'),
+    email: document.getElementById('user-email'),
+    emailNotifications: document.getElementById('email-notifications'),
+    activityNotifications: document.getElementById('activity-notifications'),
+    themeSelect: document.getElementById('theme-select'),
+    fontSelect: document.getElementById('font-select'),
+    shareProgress: document.getElementById('share-progress'),
+    saveStatus: document.getElementById('save-status'),
+    changePassword: document.getElementById('change-password'),
+    deleteAccount: document.getElementById('delete-account'),
+    saveButton: document.getElementById('save-settings'),
+    userGreeting: document.querySelector('.user-text h3')
+  };
+
+  const defaultSettings = {
+    name: 'Lucas Oliveira',
+    email: 'lucas.oliveira@email.com',
+    emailNotifications: true,
+    activityNotifications: true,
+    theme: 'dark',
+    fontSize: 'normal',
+    shareProgress: false
+  };
+
+  function loadSettings() {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      try {
+        return JSON.parse(stored);
+      } catch {
+        return defaultSettings;
+      }
+    }
+    return defaultSettings;
+  }
+
+  function saveSettings(settings) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+    showStatus('Configurações salvas com sucesso.', 'success');
+  }
+
+  function applySettings(settings) {
+    elements.name.value = settings.name;
+    elements.email.value = settings.email;
+    elements.emailNotifications.checked = settings.emailNotifications;
+    elements.activityNotifications.checked = settings.activityNotifications;
+    elements.themeSelect.value = settings.theme;
+    elements.fontSelect.value = settings.fontSize;
+    elements.shareProgress.checked = settings.shareProgress;
+    elements.userGreeting.textContent = `Olá, ${settings.name.split(' ')[0]}!`;
+    document.body.classList.toggle('light-mode', settings.theme === 'light');
+    document.body.classList.toggle('large-font', settings.fontSize === 'large');
+    document.body.classList.toggle('small-font', settings.fontSize === 'small');
+  }
+
+  function getCurrentSettings() {
+    return {
+      name: elements.name.value.trim() || defaultSettings.name,
+      email: elements.email.value.trim() || defaultSettings.email,
+      emailNotifications: elements.emailNotifications.checked,
+      activityNotifications: elements.activityNotifications.checked,
+      theme: elements.themeSelect.value,
+      fontSize: elements.fontSelect.value,
+      shareProgress: elements.shareProgress.checked
+    };
+  }
+
+  function showStatus(message, type) {
+    elements.saveStatus.textContent = message;
+    elements.saveStatus.className = `save-status ${type}`;
+    setTimeout(() => {
+      elements.saveStatus.textContent = '';
+      elements.saveStatus.className = 'save-status';
+    }, 3000);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const settings = loadSettings();
+    applySettings(settings);
+
+    elements.saveButton.addEventListener('click', () => {
+      const settingsToSave = getCurrentSettings();
+      saveSettings(settingsToSave);
+      applySettings(settingsToSave);
+    });
+
+    elements.changePassword.addEventListener('click', () => {
+      const newPassword = prompt('Insira a nova senha:');
+      if (newPassword) {
+        localStorage.setItem('revisa_password', newPassword);
+        showStatus('Senha alterada com sucesso.', 'success');
+      }
+    });
+
+    elements.deleteAccount.addEventListener('click', () => {
+      if (confirm('Tem certeza de que deseja excluir sua conta? Esta ação não pode ser desfeita.')) {
+        localStorage.removeItem(STORAGE_KEY);
+        localStorage.removeItem('revisa_password');
+        location.href = 'telalogin.html';
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

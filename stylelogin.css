@@ -20,17 +20,17 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column; /* deixa um ao lado do outro em coluna*/
+    flex-direction: column; /*deixa um ao lado do outro em coluna*/
 }
 
-.left-login > h1 { /* chamar só os H1 dentro da left-login */
-    font-size: 3vw; /* definir o tamanho da fonte em relação à largura d a tela, para que seja responsivo */
+.left-login > h1 { /*chamar só os H1 dentro da left-login*/
+    font-size: 3vw; /*definir o tamanho da fonte em relação à largura d a tela, para que seja responsivo*/
     color: #77ffc0;
 }
 
 .left-loign > img {
-    width: 50%; /* definir a largura da imagem para 50% do contêiner pai */
-    margin-top: 20px; /* adicionar uma margem superior para separar a imagem do texto */
+    width: 50%; /*definir a largura da imagem para 50% do contêiner pai*/
+    margin-top: 20px; /*adicionar uma margem superior para separar a imagem do texto*/
 }
 .right-login{
     width: 50vw;
@@ -41,12 +41,12 @@ body {
 }
 
 .card-login{
-    width: 60%; /* % pega referente ao total da DIV que ela está */
+    width: 60%; /*% pega referente ao total da DIV que ela está*/
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    padding: 30px 35px;  /* margens dentro do componente, eixo Y e X */
+    padding: 30px 35px;  /*margens dentro do componente, eixo Y e X*/
     background: #2f2841;
     border-radius: 20px; /* borca da DIV arredondada */
     box-shadow: 0px 10px 40px #00000056; /* sombra do card, primeiro valor X, segundo para cima, negativo para cima, terceiro valor blur, quarto é cor */
