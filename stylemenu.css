@@ -17,8 +17,6 @@ body{
         height:100%;
 }
 
-/* SIDEBAR */
-
 .sidebar{
     width:15%;
     height:100vh;
@@ -49,7 +47,6 @@ body{
     line-height:1.5;
 }
 
-/* MENU */
 
 .menu{
     margin-top:50px;
@@ -89,7 +86,6 @@ body{
     color:#52ffbe;
 }
 
-/* BOTÃO */
 
 .logout{
     height:55px;
@@ -116,8 +112,6 @@ body{
     color:#111;
 }
 
-/* CONTEÚDO */
-
 .content{
     flex:1;
 
@@ -132,7 +126,6 @@ body{
     overflow:hidden;
 }
 
-/* TOPO */
 
 .topbar{
     display:flex;
@@ -171,8 +164,6 @@ body{
     color:#52ffbe;
 }
 
-/* TEXTO */
-
 .welcome h2{
     font-size:54px;
     color:#52ffbe;
@@ -184,7 +175,6 @@ body{
     color:#d0d0d0;
 }
 
-/* CARDS */
 
 .cards{
     display:grid;
@@ -244,15 +234,12 @@ body{
     font-size:16px;
 }
 
-/* FOOTER */
-
 footer{
     text-align:center;
     color:#8d8d8d;
     font-size:15px;
 }
 
-/* PROFILE */
 
     .profile-card{
     background:#1d1f39;
@@ -330,7 +317,6 @@ footer{
         font-size:22px;
     }
 
-    /* STATS */
 
     .stats-grid{
         display:grid;
@@ -396,7 +382,6 @@ footer{
         color:#cfcfcf;
     }
 
-    /* BOTTOM */
 
     .bottom-grid{
         display:grid;
@@ -447,8 +432,6 @@ footer{
     margin-bottom:10px;
     }
 
-/* RESPONSIVO */
-
 @media(max-width:1200px){
 
     .cards{
@@ -488,7 +471,6 @@ footer{
 
 }
 
-/* Navegação: tornar links do menu clicáveis sem estilo padrão */
 .menu a{
     color:inherit;
     text-decoration:none;

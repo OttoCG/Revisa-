@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
+/*Comentários de Otto para ajudar o pessoal a se guiar*/
+
 body {
     margin: 0; /*tirar margem base do html*/
     font-family: 'Roboto', sans-serif; /* definir a fonte para o corpo do documento caso a importada acima não seja carregada */

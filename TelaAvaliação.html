@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Revisa+ | Avaliação Diagnóstica</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,
+body{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+}
+
+
+body{
+    font-family:'Poppins',sans-serif;
+
+    background:
+    radial-gradient(circle at top,#11245e 0%,#050816 65%);
+
+    color:white;
+}
+
+
+.app{
+    width:100vw;
+    height:100vh;
+
+    padding:0.8rem;
+
+    display:flex;
+    flex-direction:column;
+
+    gap:0.8rem;
+
+    overflow:hidden;
+}
+
+
+.header{
+    width:100%;
+
+    min-height:48px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    flex-shrink:0;
+}
+
+.back-btn{
+    font-size:0.8rem;
+
+    cursor:pointer;
+}
+
+.header-center{
+    display:flex;
+    align-items:center;
+
+    gap:1rem;
+}
+
+.logo{
+    color:#46ffb3;
+
+    font-size:1.2rem;
+    font-weight:700;
+}
+
+.page-title{
+    font-size:1rem;
+    font-weight:600;
+}
+
+.exit-btn{
+    min-width:130px;
+    height:38px;
+
+    padding:0 1rem;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:transparent;
+
+    border:1px solid #ff5b5b;
+
+    color:#ff5b5b;
+
+    font-size:0.75rem;
+    font-weight:500;
+
+    cursor:pointer;
+
+    transition:0.3s;
+}
+
+.exit-btn:hover{
+    background:#ff5b5b;
+    color:white;
+}
+
+
+.status-bar{
+    width:100%;
+
+    background:#0c1738;
+
+    border:1px solid rgba(255,255,255,0.05);
+
+    border-radius:18px;
+
+    padding:0.9rem;
+
+    display:grid;
+
+    grid-template-columns:
+    1.6fr
+    0.8fr
+    0.8fr;
+
+    gap:1rem;
+
+    align-items:center;
+
+    flex-shrink:0;
+}
+
+.progress-area{
+    display:flex;
+    flex-direction:column;
+
+    gap:0.5rem;
+}
+
+.progress-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.progress-top h3{
+    font-size:0.78rem;
+    font-weight:500;
+}
+
+.progress-top span{
+    font-size:0.72rem;
+
+    color:#d0d0d0;
+}
+
+.progress-bar{
+    width:100%;
+    height:10px;
+
+    background:#1b295c;
+
+    border-radius:20px;
+
+    overflow:hidden;
+}
+
+.progress{
+    width:25%;
+    height:100%;
+
+    background:#46ffb3;
+}
+
+.info-box{
+    display:flex;
+    align-items:center;
+
+    gap:0.7rem;
+}
+
+.info-icon{
+    width:40px;
+    height:40px;
+
+    border-radius:50%;
+
+    border:2px solid #6f7cff;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:0.95rem;
+
+    flex-shrink:0;
+}
+
+.info-box small{
+    display:block;
+
+    font-size:0.65rem;
+
+    color:#bfc4de;
+}
+
+.info-box h2{
+    font-size:1rem;
+}
+
+.green{
+    color:#46ffb3;
+}
+
+
+.main{
+    flex:1;
+
+    min-height:0;
+
+    display:grid;
+
+    grid-template-columns:
+    1.55fr
+    0.75fr;
+
+    gap:0.8rem;
+
+    overflow:hidden;
+}
+
+
+.question-card{
+    background:#0c1738;
+
+    border-radius:22px;
+
+    border:1px solid rgba(255,255,255,0.05);
+
+    padding:1rem;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+
+    min-height:0;
+
+    overflow:hidden;
+}
+
+.question-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:1rem;
+
+    gap:0.8rem;
+}
+
+.subject{
+    padding:0.55rem 1rem;
+
+    border-radius:40px;
+
+    border:1px solid #46ffb3;
+
+    color:#46ffb3;
+
+    font-size:0.78rem;
+    font-weight:600;
+}
+
+.question-count{
+    padding:0.55rem 1rem;
+
+    border-radius:12px;
+
+    background:#152149;
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    font-size:0.75rem;
+}
+
+.question-title{
+    font-size:1.4rem;
+    font-weight:600;
+
+    line-height:1.35;
+
+    margin-bottom:1.2rem;
+}
+
+
+.expression{
+    width:70%;
+
+    min-height:80px;
+
+    margin:0 auto 1.2rem auto;
+
+    border-radius:18px;
+
+    border:1px solid #8f56ff;
+
+    background:rgba(10,16,45,0.8);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    text-align:center;
+
+    font-size:2rem;
+    font-weight:600;
+}
+
+
+.answers{
+    display:flex;
+    flex-direction:column;
+
+    gap:0.8rem;
+}
+
+.answer{
+    min-height:60px;
+
+    background:#13204a;
+
+    border-radius:16px;
+
+    border:1px solid rgba(255,255,255,0.05);
+
+    display:flex;
+    align-items:center;
+
+    gap:1rem;
+
+    padding:0.8rem 1rem;
+
+    cursor:pointer;
+
+    transition:0.3s;
+}
+
+.answer:hover{
+    border-color:#46ffb3;
+}
+
+.answer.active{
+    border-color:#46ffb3;
+
+    background:
+    linear-gradient(90deg,
+    rgba(70,255,179,0.16),
+    rgba(19,32,74,1));
+}
+
+.answer-letter{
+    width:40px;
+    height:40px;
+
+    border-radius:50%;
+
+    border:2px solid rgba(255,255,255,0.15);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:1rem;
+    font-weight:700;
+
+    flex-shrink:0;
+}
+
+.answer.active .answer-letter{
+    border-color:#46ffb3;
+
+    color:#46ffb3;
+}
+
+.answer span{
+    font-size:1rem;
+}
+
+
+.bottom-buttons{
+    display:flex;
+    justify-content:space-between;
+
+    gap:1rem;
+
+    margin-top:1rem;
+
+    flex-shrink:0;
+}
+
+.prev-btn,
+.next-btn{
+    flex:1;
+
+    height:54px;
+
+    border:none;
+
+    border-radius:16px;
+
+    font-size:0.95rem;
+    font-weight:600;
+
+    cursor:pointer;
+}
+
+.prev-btn{
+    background:transparent;
+
+    border:1px solid rgba(255,255,255,0.12);
+
+    color:#dce1ff;
+}
+
+.next-btn{
+    background:#46ffb3;
+
+    color:#111;
+}
+
+
+.side-panel{
+    display:flex;
+    flex-direction:column;
+
+    gap:0.8rem;
+
+    min-height:0;
+
+    overflow:hidden;
+}
+
+
+.navigation-card{
+    flex:1;
+
+    background:#0c1738;
+
+    border-radius:22px;
+
+    border:1px solid rgba(255,255,255,0.05);
+
+    padding:1rem;
+
+    display:flex;
+    flex-direction:column;
+
+    overflow:hidden;
+}
+
+.navigation-card h2{
+    font-size:1rem;
+
+    margin-bottom:1rem;
+}
+
+.number-grid{
+    display:grid;
+
+    grid-template-columns:
+    repeat(5,1fr);
+
+    gap:0.7rem;
+}
+
+.number{
+    aspect-ratio:1/1;
+
+    background:#152149;
+
+    border-radius:12px;
+
+    border:1px solid rgba(255,255,255,0.06);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:0.9rem;
+    font-weight:600;
+
+    cursor:pointer;
+}
+
+.number.active{
+    background:#46ffb3;
+
+    color:#111;
+}
+
+
+.legend{
+    margin-top:1rem;
+
+    padding-top:1rem;
+
+    border-top:
+    1px solid rgba(255,255,255,0.08);
+}
+
+.legend h3{
+    font-size:0.95rem;
+
+    margin-bottom:0.8rem;
+}
+
+.legend-item{
+    display:flex;
+    align-items:center;
+
+    gap:0.7rem;
+
+    margin-bottom:0.7rem;
+
+    font-size:0.78rem;
+
+    color:#d5d5d5;
+}
+
+.legend-box{
+    width:18px;
+    height:18px;
+
+    border-radius:5px;
+
+    border:2px solid #46ffb3;
+
+    flex-shrink:0;
+}
+
+.current{
+    background:#46ffb3;
+}
+
+.empty{
+    border-color:#435291;
+}
+
+
+.tip-card{
+    background:
+    linear-gradient(135deg,
+    #1a1242,
+    #0c1738);
+
+    border-radius:22px;
+
+    border:1px solid rgba(255,255,255,0.05);
+
+    padding:1rem;
+
+    flex-shrink:0;
+}
+
+.tip-card h2{
+    color:#b56cff;
+
+    font-size:1rem;
+
+    margin-bottom:0.7rem;
+}
+
+.tip-card p{
+    color:#d9d9d9;
+
+    font-size:0.82rem;
+
+    line-height:1.5;
+}
+
+
+@media(max-width:1200px){
+
+    html,
+    body{
+        overflow:auto;
+    }
+
+    .app{
+        height:auto;
+
+        overflow:visible;
+    }
+
+    .main{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:768px){
+
+    html,
+    body{
+        overflow:auto;
+    }
+
+    .app{
+        height:auto;
+    }
+
+    .header{
+        flex-direction:column;
+
+        gap:0.8rem;
+    }
+
+    .header-center{
+        flex-direction:column;
+
+        gap:0.4rem;
+    }
+
+    .status-bar{
+        grid-template-columns:1fr;
+    }
+
+    .question-top{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .expression{
+        width:100%;
+
+        font-size:1.5rem;
+    }
+
+    .bottom-buttons{
+        flex-direction:column;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="app">
+
+
+    <header class="header">
+
+        <div class="back-btn">
+            ← Voltar
+        </div>
+
+        <div class="header-right">
+
+            <div class="logo">
+                Revisa+
+            </div>
+
+            <div class="page-title">
+                Avaliação Diagnóstica
+            </div>
+
+        </div>
+
+        <button class="exit-btn">
+            ⤴ Sair da avaliação
+        </button>
+
+    </header>
+
+
+    <section class="status-bar">
+
+        <div class="progress-area">
+
+            <div class="progress-top">
+
+                <h3>Progresso geral</h3>
+
+                <span>5 de 20 questões</span>
+
+            </div>
+
+            <div class="progress-bar">
+
+                <div class="progress"></div>
+
+            </div>
+
+        </div>
+
+        <div class="info-box">
+
+            <div class="info-icon">
+                ⏰
+            </div>
+
+            <div>
+
+                <small>Tempo restante</small>
+
+                <h2>12:34</h2>
+
+            </div>
+
+        </div>
+
+        <div class="info-box">
+
+            <div class="info-icon">
+                ⭐
+            </div>
+
+            <div>
+
+                <small>XP ao concluir</small>
+
+                <h2 class="green">
+                    +250 XP
+                </h2>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <main class="main">
+
+
+        <section class="question-card">
+
+            <div>
+
+                <div class="question-top">
+
+                    <div class="subject">
+                        📘 Matemática
+                    </div>
+
+                    <div class="question-count">
+                        Questão 5 de 20
+                    </div>
+
+                </div>
+
+                <h1 class="question-title">
+                    5. Qual é o resultado da expressão abaixo?
+                </h1>
+
+                <div class="expression">
+
+                    2(3x − 4) + 5x = ?
+
+                </div>
+
+                <div class="answers">
+
+                    <div class="answer">
+
+                        <div class="answer-letter">
+                            A
+                        </div>
+
+                        <span>11x − 8</span>
+
+                    </div>
+
+                    <div class="answer active">
+
+                        <div class="answer-letter">
+                            B
+                        </div>
+
+                        <span>11x − 4</span>
+
+                    </div>
+
+                    <div class="answer">
+
+                        <div class="answer-letter">
+                            C
+                        </div>
+
+                        <span>6x − 8</span>
+
+                    </div>
+
+                    <div class="answer">
+
+                        <div class="answer-letter">
+                            D
+                        </div>
+
+                        <span>6x − 4</span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="bottom-buttons">
+
+                <button class="prev-btn">
+                    ← Questão anterior
+                </button>
+
+                <button class="next-btn">
+                    Próxima questão →
+                </button>
+
+            </div>
+
+        </section>
+
+        <aside class="side-panel">
+
+
+            <div class="navigation-card">
+
+                <h2>
+                    Navegação
+                </h2>
+
+                <div class="number-grid">
+
+                    <div class="number">1</div>
+                    <div class="number">2</div>
+                    <div class="number">3</div>
+                    <div class="number">4</div>
+
+                    <div class="number active">5</div>
+
+                    <div class="number">6</div>
+                    <div class="number">7</div>
+                    <div class="number">8</div>
+                    <div class="number">9</div>
+                    <div class="number">10</div>
+
+                    <div class="number">11</div>
+                    <div class="number">12</div>
+                    <div class="number">13</div>
+                    <div class="number">14</div>
+                    <div class="number">15</div>
+
+                    <div class="number">16</div>
+                    <div class="number">17</div>
+                    <div class="number">18</div>
+                    <div class="number">19</div>
+                    <div class="number">20</div>
+
+                </div>
+
+
+                <div class="legend">
+
+                    <h3>
+                        Legenda
+                    </h3>
+
+                    <div class="legend-item">
+
+                        <div class="legend-box"></div>
+
+                        Respondida
+
+                    </div>
+
+                    <div class="legend-item">
+
+                        <div class="legend-box current"></div>
+
+                        Questão atual
+
+                    </div>
+
+                    <div class="legend-item">
+
+                        <div class="legend-box empty"></div>
+
+                        Não respondida
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="tip-card">
+
+                <h2>
+                    🎯 Dica rápida
+                </h2>
+
+                <p>
+                    Multiplique o número fora do parêntese por todos os termos internos antes de somar os semelhantes.
+                </p>
+
+            </div>
+
+        </aside>
+
+    </main>
+
+</div>
+
+</body>
+</html>
