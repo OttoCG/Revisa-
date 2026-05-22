@@ -2,44 +2,58 @@
 
 /*Comentários de Otto para ajudar o pessoal a se guiar*/
 
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
 body {
-    margin: 0; /*tirar margem base do html*/
+    margin: 0; /* tirar margem base do html */
     font-family: 'Roboto', sans-serif; /* definir a fonte para o corpo do documento caso a importada acima não seja carregada */
+    min-height: 100vh;
+    width: 100%;
+    background: #201b2c;
 }
 
 .main-login{
-    width: 100vw;  /*viewport width - 100vw é 100% da tela em horizontal*/
-    height: 100vh; /*viewport height  - 100vh é 100% da tela em vertical*/
+    width: 100%;
+    min-height: 100vh; /* viewport height - 100vh é 100% da tela em vertical */
     background: #201b2c;
-    display: flex; /* deixar div lado a lado*/
-    justify-content: center; /* centraliza no eixo X para o centro*/
+    display: flex; /* deixar div lado a lado */
+    justify-content: center; /* centraliza no eixo X para o centro */
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .left-login{
-    width: 50vw;
-    height: 100vh;
+    width: 50%;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column; /*deixa um ao lado do outro em coluna*/
+    padding: 40px 20px;
 }
 
 .left-login > h1 { /*chamar só os H1 dentro da left-login*/
-    font-size: 3vw; /*definir o tamanho da fonte em relação à largura d a tela, para que seja responsivo*/
+    font-size: clamp(2rem, 3vw, 4rem); /*definir o tamanho da fonte em relação à largura da tela */
     color: #77ffc0;
+    text-align: center;
 }
 
-.left-loign > img {
+.left-login > img {
     width: 50%; /*definir a largura da imagem para 50% do contêiner pai*/
+    max-width: 320px;
+    height: auto;
     margin-top: 20px; /*adicionar uma margem superior para separar a imagem do texto*/
 }
+
 .right-login{
-    width: 50vw;
-    height: 100vh;
+    width: 50%;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 40px 20px;
 }
 
 .card-login{
@@ -143,4 +157,33 @@ body {
 }
 .btn-register:hover {
     background: #6b5b7a;
+}
+
+@media (max-width: 900px) {
+    .left-login,
+    .right-login {
+        width: 100%;
+        min-height: auto;
+        padding: 25px 15px;
+    }
+
+    .card-login {
+        width: 100%;
+        max-width: 520px;
+    }
+
+    .button-container {
+        flex-direction: column;
+        gap: 12px;
+    }
+}
+
+@media (max-width: 520px) {
+    .card-login {
+        padding: 24px 20px;
+    }
+
+    .textfield > input {
+        font-size: 11pt;
+    }
 }

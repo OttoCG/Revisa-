@@ -51,7 +51,7 @@
 
     </div>
 
-    <button class="logout" onclick="location.href='telalogin.html'">
+    <button class="logout" onclick="doLogout()">
       ↩ Sair
     </button>
 
@@ -67,8 +67,8 @@
       <div class="user">
 
         <div class="user-text">
-          <h3>Olá, Aluno!</h3>
-          <p>Bem-vindo de volta.</p>
+          <h3 id="user-greeting">Olá, Aluno!</h3>
+          <p id="user-level">Nível 1 - 0 XP</p>
         </div>
 
         <div class="avatar">
@@ -103,7 +103,7 @@
         <p>Receba recomendações personalizadas.</p>
       </div>
 
-      <div class="card">
+      <div class="card" onclick="location.href='TelaAvaliação.html'">
         <div class="icon">📖</div>
         <h3>Revisar</h3>
         <p>Revise conteúdos importantes.</p>
@@ -136,6 +136,32 @@
   </main>
 
 </div>
+
+<script src="userSystem.js"></script>
+<script>
+  // Verificar se usuário está logado
+  if (!isUserLoggedIn()) {
+    location.href = 'telalogin.html';
+  }
+
+  // Atualizar informações do usuário
+  function updateUserInfo() {
+    const userInfo = getUserInfo();
+    if (userInfo) {
+      document.getElementById('user-greeting').textContent = `Olá, ${userInfo.name}!`;
+      document.getElementById('user-level').textContent = `Nível ${userInfo.level} - ${userInfo.currentXP} XP`;
+    }
+  }
+
+  // Fazer logout
+  function doLogout() {
+    logout();
+    location.href = 'telalogin.html';
+  }
+
+  // Atualizar info ao carregar a página
+  updateUserInfo();
+</script>
 
 </body>
 </html>

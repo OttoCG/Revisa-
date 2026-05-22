@@ -14,25 +14,178 @@
         </div>
         <div class="right-login">
             <div class="card-login">
-                <h1>Bem-Vindo</h1><br>
-                <div class="textfield">
-                    <label for="usuario">Usuário</label>
-                    <input type="text" name="usuario" placeholder="Usuário">
-                <div class="textfield">
-                    <label for="senha">Senha</label>
-                    <input type="password" name="senha" placeholder="Senha">
-                </div>    
-                <div class="button-container">
-                    <button class="btn-login">Login</button>
-                    <button class="btn-register">Registrar</button>
+                <h1 id="form-title">Bem-Vindo</h1><br>
+                
+                <!-- Login Form -->
+                <div id="login-form">
+                    <div class="textfield">
+                        <label for="usuario">Usuário</label>
+                        <input type="text" id="usuario" placeholder="Digite seu nome de usuário">
+                    </div>
+                    <div class="textfield">
+                        <label for="senha">Senha</label>
+                        <input type="password" id="senha" placeholder="Senha">
+                    </div>    
+                    <div class="button-container">
+                        <button class="btn-login" id="btn-login">Login</button>
+                        <button class="btn-register" id="btn-to-register">Criar Conta</button>
+                    </div>
                 </div>
+
+                <!-- Register Form -->
+                <div id="register-form" style="display: none;">
+                    <div class="textfield">
+                        <label for="novo-usuario">Nome de Usuário</label>
+                        <input type="text" id="novo-usuario" placeholder="Escolha seu nome de usuário">
+                    </div>
+                    <div class="textfield">
+                        <label for="nova-senha">Senha</label>
+                        <input type="password" id="nova-senha" placeholder="Escolha uma senha">
+                    </div>
+                    <div class="textfield">
+                        <label for="confirma-senha">Confirmar Senha</label>
+                        <input type="password" id="confirma-senha" placeholder="Confirme a senha">
+                    </div>
+                    <div class="button-container">
+                        <button class="btn-login" id="btn-register-confirm">Registrar</button>
+                        <button class="btn-register" id="btn-to-login">Voltar</button>
+                    </div>
+                </div>
+
+                <div id="error-message" style="color: #ff5b5b; margin-top: 1rem; text-align: center; display: none;"></div>
             </div>
         </div>
     </div>
+
+    <script src="userSystem.js"></script>
     <script>
-        document.querySelector(".btn-login").addEventListener("click", function() {
-        window.location.href = "telamenu.html";
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+        const formTitle = document.getElementById('form-title');
+        const errorMessage = document.getElementById('error-message');
+
+        const usuarioInput = document.getElementById('usuario');
+        const senhaInput = document.getElementById('senha');
+        const novoUsuarioInput = document.getElementById('novo-usuario');
+        const novaSenhaInput = document.getElementById('nova-senha');
+        const confirmaSenhaInput = document.getElementById('confirma-senha');
+
+        const btnLogin = document.getElementById('btn-login');
+        const btnToRegister = document.getElementById('btn-to-register');
+        const btnRegisterConfirm = document.getElementById('btn-register-confirm');
+        const btnToLogin = document.getElementById('btn-to-login');
+
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+            setTimeout(() => {
+                errorMessage.style.display = 'none';
+            }, 3000);
+        }
+
+        // Alternar para formulário de registro
+        btnToRegister.addEventListener('click', () => {
+            loginForm.style.display = 'none';
+            registerForm.style.display = 'block';
+            formTitle.textContent = 'Criar Conta';
+            errorMessage.style.display = 'none';
         });
+
+        // Alternar para formulário de login
+        btnToLogin.addEventListener('click', () => {
+            registerForm.style.display = 'none';
+            loginForm.style.display = 'block';
+            formTitle.textContent = 'Bem-Vindo';
+            usuarioInput.value = '';
+            senhaInput.value = '';
+            errorMessage.style.display = 'none';
+        });
+
+        // Login
+        btnLogin.addEventListener('click', () => {
+            const username = usuarioInput.value.trim();
+            const password = senhaInput.value.trim();
+
+            if (!username) {
+                showError('Digite seu nome de usuário');
+                return;
+            }
+
+            if (!password) {
+                showError('Digite sua senha');
+                return;
+            }
+
+            // Para simplificar, aceita qualquer login válido
+            // Em produção, isso seria validado no servidor
+            const user = getCurrentUser();
+            if (user && user.name === username) {
+                // Usuário já existe
+                window.location.href = 'telamenu.html';
+            } else {
+                showError('Usuário ou senha incorretos. Use "Criar Conta" para registrar.');
+            }
+        });
+
+        // Registro
+        btnRegisterConfirm.addEventListener('click', () => {
+            const username = novoUsuarioInput.value.trim();
+            const password = novaSenhaInput.value.trim();
+            const confirmPassword = confirmaSenhaInput.value.trim();
+
+            if (!username) {
+                showError('Digite um nome de usuário');
+                return;
+            }
+
+            if (username.length < 3) {
+                showError('O nome de usuário deve ter pelo menos 3 caracteres');
+                return;
+            }
+
+            if (!password) {
+                showError('Digite uma senha');
+                return;
+            }
+
+            if (password.length < 4) {
+                showError('A senha deve ter pelo menos 4 caracteres');
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                showError('As senhas não correspondem');
+                return;
+            }
+
+            // Verificar se usuário já existe
+            if (getCurrentUser()) {
+                showError('Um usuário já está criado. Faça logout primeiro.');
+                return;
+            }
+
+            if (createUser(username)) {
+                registerForm.style.display = 'none';
+                loginForm.style.display = 'block';
+                formTitle.textContent = 'Bem-Vindo';
+                usuarioInput.value = '';
+                senhaInput.value = '';
+                novoUsuarioInput.value = '';
+                novaSenhaInput.value = '';
+                confirmaSenhaInput.value = '';
+                showError('Conta criada com sucesso! Faça login para continuar.');
+                setTimeout(() => {
+                    errorMessage.style.display = 'none';
+                }, 3000);
+            } else {
+                showError('Erro ao criar conta. Tente novamente.');
+            }
+        });
+
+        // Verificar se já existe usuário logado
+        if (isUserLoggedIn()) {
+            window.location.href = 'telamenu.html';
+        }
     </script>
 </body>
 </html>

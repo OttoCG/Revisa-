@@ -24,8 +24,8 @@
 html,
 body{
     width:100%;
-    height:100%;
-    overflow:hidden;
+    min-height:100%;
+    overflow:auto;
 }
 
 
@@ -41,7 +41,7 @@ body{
 
 .app{
     width:100vw;
-    height:100vh;
+    min-height:100vh;
 
     padding:0.8rem;
 
@@ -50,7 +50,7 @@ body{
 
     gap:0.8rem;
 
-    overflow:hidden;
+    overflow:auto;
 }
 
 
@@ -514,6 +514,12 @@ body{
     color:#111;
 }
 
+.number.answered{
+    background:#46ffb3;
+    color:#111;
+    border-color:#46ffb3;
+}
+
 
 .legend{
     margin-top:1rem;
@@ -594,12 +600,112 @@ body{
     line-height:1.5;
 }
 
+    .difficulty-screen{
+        width:100%;
+        min-height:320px;
+        background:#0c1738;
+        border-radius:22px;
+        border:1px solid rgba(255,255,255,0.05);
+        padding:1.3rem;
+        display:flex;
+        flex-direction:column;
+        gap:1.2rem;
+        justify-content:center;
+        align-items:center;
+        text-align:center;
+    }
 
-@media(max-width:1200px){
+    .difficulty-screen h2{
+        font-size:1.4rem;
+        margin-bottom:0.4rem;
+    }
 
-    html,
-    body{
-        overflow:auto;
+    .difficulty-screen p{
+        color:#d0d0d0;
+        max-width:720px;
+        line-height:1.6;
+    }
+
+    .difficulty-grid{
+        display:grid;
+        grid-template-columns:repeat(3, minmax(0,1fr));
+        gap:1rem;
+        width:100%;
+    }
+
+    .difficulty-button{
+        border:1px solid rgba(70,255,179,0.22);
+        background:linear-gradient(180deg, rgba(12,23,56,0.96), rgba(21,33,73,0.85));
+        box-shadow:0 16px 40px rgba(0,0,0,0.18);
+        border-radius:24px;
+        padding:1.1rem 1rem;
+        cursor:pointer;
+        transition:transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+        display:flex;
+        flex-direction:column;
+        gap:0.75rem;
+        min-height:150px;
+        justify-content:center;
+        align-items:center;
+        text-align:center;
+    }
+
+    .difficulty-button::before{
+        content:'';
+        width:48px;
+        height:48px;
+        border-radius:50%;
+        background:rgba(70,255,179,0.18);
+        display:block;
+    }
+
+    .difficulty-button:hover,
+    .difficulty-button.active{
+        transform:translateY(-4px);
+        border-color:#46ffb3;
+        background:linear-gradient(180deg, rgba(70,255,179,0.14), rgba(21,33,73,0.95));
+    }
+
+    .difficulty-button strong{
+        font-size:1.1rem;
+        color:#e8f7ee;
+    }
+
+    .difficulty-button span{
+        color:#b9d3f1;
+        font-size:0.92rem;
+        line-height:1.4;
+    }
+
+    .difficulty-selected {
+        width:100%;
+        display:flex;
+        justify-content:center;
+        gap:0.75rem;
+        align-items:center;
+        margin-top:0.5rem;
+        color:#46ffb3;
+    }
+
+    .start-quiz-btn{
+        min-width:180px;
+        border:none;
+        border-radius:16px;
+        padding:0.9rem 1.4rem;
+        background:#46ffb3;
+        color:#111;
+        font-weight:700;
+        cursor:pointer;
+        transition:0.25s;
+    }
+
+    .start-quiz-btn:disabled{
+        opacity:0.45;
+        cursor:not-allowed;
+    }
+
+    .hidden{
+        display:none !important;
     }
 
     .app{
@@ -692,7 +798,38 @@ body{
     </header>
 
 
-    <section class="status-bar">
+    <section class="difficulty-screen">
+
+        <div>
+            <h2>Escolha o nível de dificuldade</h2>
+            <p>Selecione o nível de dificuldade antes de iniciar a avaliação. Cada opção apresenta um conjunto exclusivo de 20 questões com linguagem mais próxima de provas oficiais.</p>
+        </div>
+
+        <div class="difficulty-grid">
+            <button class="difficulty-button" data-level="facil">
+                <strong>Fácil</strong>
+                <span>Questões de nível Fundamental II</span>
+            </button>
+            <button class="difficulty-button" data-level="medio">
+                <strong>Médio</strong>
+                <span>Questões de nível Ensino Médio</span>
+            </button>
+            <button class="difficulty-button" data-level="dificil">
+                <strong>Difícil</strong>
+                <span>Questões estilo ENEM / Vestibular</span>
+            </button>
+        </div>
+
+        <div class="difficulty-selected">
+            <span>Nível selecionado:</span>
+            <strong class="selected-difficulty-name">Nenhum</strong>
+        </div>
+
+        <button class="start-quiz-btn" disabled>Iniciar avaliação</button>
+
+    </section>
+
+    <section class="status-bar hidden">
 
         <div class="progress-area">
 
@@ -722,7 +859,7 @@ body{
 
                 <small>Tempo restante</small>
 
-                <h2>12:34</h2>
+                <h2 id="timer-display">20:00</h2>
 
             </div>
 
@@ -749,7 +886,7 @@ body{
     </section>
 
 
-    <main class="main">
+    <main class="main hidden">
 
 
         <section class="question-card">
@@ -929,6 +1066,786 @@ body{
     </main>
 
 </div>
+
+<script src="userSystem.js"></script>
+<script>
+const questionBanks = {
+    facil: [
+        {
+            title: 'João tem 5 balas e ganha mais 7. Quantas balas ele possui agora?',
+            expression: '5 + 7 = ?',
+            choices: ['10', '11', '12', '13'],
+            answer: 2,
+            tip: 'Some as duas quantias.'
+        },
+        {
+            title: 'Resolva a equação: x + 6 = 14.',
+            expression: 'x + 6 = 14',
+            choices: ['6', '7', '8', '9'],
+            answer: 2,
+            tip: 'Subtraia 6 de 14.'
+        },
+        {
+            title: 'Qual é o dobro de 9?',
+            expression: '2 × 9 = ?',
+            choices: ['16', '17', '18', '19'],
+            answer: 2,
+            tip: 'Multiplique 9 por 2.'
+        },
+        {
+            title: 'Calcule: 3 × 5 − 4.',
+            expression: '3 × 5 − 4 = ?',
+            choices: ['9', '11', '13', '14'],
+            answer: 1,
+            tip: 'Faça a multiplicação antes da subtração.'
+        },
+        {
+            title: 'Qual número completa a sequência 2, 4, 6, 8, ?.',
+            expression: '2, 4, 6, 8, ?',
+            choices: ['9', '10', '11', '12'],
+            answer: 1,
+            tip: 'A sequência aumenta de 2 em 2.'
+        },
+        {
+            title: 'Qual é a metade de 50?',
+            expression: '50 ÷ 2 = ?',
+            choices: ['20', '25', '30', '35'],
+            answer: 1,
+            tip: 'Divida o número por 2.'
+        },
+        {
+            title: 'Resolva: 4 + 3 × 2.',
+            expression: '4 + 3 × 2 = ?',
+            choices: ['10', '14', '18', '11'],
+            answer: 0,
+            tip: 'Multiplicação antes da adição.'
+        },
+        {
+            title: 'Quantos lados têm dois triângulos e um quadrado juntos?',
+            expression: '3 + 3 + 4 = ?',
+            choices: ['9', '10', '11', '12'],
+            answer: 1,
+            tip: 'Some os lados de cada figura.'
+        },
+        {
+            title: 'Quanto é 15 ÷ 3?',
+            expression: '15 ÷ 3 = ?',
+            choices: ['4', '5', '6', '7'],
+            answer: 1,
+            tip: 'Divida 15 em 3 partes iguais.'
+        },
+        {
+            title: 'Maria compra 3 cadernos a R$ 5,00 cada. Quanto ela paga?',
+            expression: '3 × 5 = ?',
+            choices: ['10', '12', '15', '18'],
+            answer: 2,
+            tip: 'Multiplique quantidade por preço unitário.'
+        },
+        {
+            title: 'Qual número não segue a sequência 2, 4, 6, 9?',
+            expression: '2, 4, 6, 9',
+            choices: ['2', '4', '6', '9'],
+            answer: 3,
+            tip: 'Identifique o termo fora da regra de adição.'
+        },
+        {
+            title: 'Quanto é 7 + 8?',
+            expression: '7 + 8 = ?',
+            choices: ['13', '14', '15', '16'],
+            answer: 2,
+            tip: 'Some os dois números.'
+        },
+        {
+            title: 'Se x − 5 = 10, qual é x?',
+            expression: 'x − 5 = 10',
+            choices: ['14', '15', '16', '17'],
+            answer: 1,
+            tip: 'Some 5 em ambos os lados para isolar x.'
+        },
+        {
+            title: 'Qual é o valor de 2²?',
+            expression: '2² = ?',
+            choices: ['2', '4', '6', '8'],
+            answer: 1,
+            tip: 'Quadrado de 2 é 2 × 2.'
+        },
+        {
+            title: 'Quanto é 6 × 6?',
+            expression: '6 × 6 = ?',
+            choices: ['30', '32', '34', '36'],
+            answer: 3,
+            tip: 'Multiplique 6 por 6.'
+        },
+        {
+            title: 'Qual é o menor número entre 10, 0, -1 e 1?',
+            expression: '10, 0, -1, 1',
+            choices: ['10', '0', '-1', '1'],
+            answer: 2,
+            tip: 'Observe a posição na reta numérica.'
+        },
+        {
+            title: 'Quanto é 18 − 9?',
+            expression: '18 − 9 = ?',
+            choices: ['7', '8', '9', '10'],
+            answer: 2,
+            tip: 'Subtraia 9 de 18.'
+        },
+        {
+            title: 'Um ônibus leva 4 pessoas por fila e tem 5 filas. Quantas pessoas viajam?',
+            expression: '4 × 5 = ?',
+            choices: ['20', '16', '15', '10'],
+            answer: 0,
+            tip: 'Multiplique pessoas por fila pelo número de filas.'
+        },
+        {
+            title: 'Quanto vale 5 + 5 × 0?',
+            expression: '5 + 5 × 0 = ?',
+            choices: ['0', '5', '10', '25'],
+            answer: 1,
+            tip: 'Multiplique antes de somar.'
+        },
+        {
+            title: 'Qual é a metade de 100?',
+            expression: '100 ÷ 2 = ?',
+            choices: ['20', '25', '40', '50'],
+            answer: 3,
+            tip: 'Divida o número por 2.'
+        },
+        {
+            title: 'Cada mão tem 5 dedos. Quantos dedos existem em 3 mãos?',
+            expression: '5 × 3 = ?',
+            choices: ['12', '13', '14', '15'],
+            answer: 3,
+            tip: 'Multiplique o número de dedos por mãos.'
+        }
+    ],
+    medio: [
+        {
+            title: 'Resolva a equação: 3(x − 2) = 15. Qual é o valor de x?',
+            expression: '3(x − 2) = 15',
+            choices: ['7', '8', '9', '10'],
+            answer: 0,
+            tip: 'Divida 15 por 3 e some 2.'
+        },
+        {
+            title: 'Qual é o valor de 2³ + 4?',
+            expression: '2³ + 4 = ?',
+            choices: ['10', '11', '12', '13'],
+            answer: 2,
+            tip: '2³ é 8, depois some 4.'
+        },
+        {
+            title: 'Se 5x = 45, então x = ?',
+            expression: '5x = 45',
+            choices: ['7', '8', '9', '10'],
+            answer: 2,
+            tip: 'Divida 45 por 5.'
+        },
+        {
+            title: 'Qual é a média das notas 6, 8 e 10?',
+            expression: '(6 + 8 + 10) ÷ 3 = ?',
+            choices: ['7', '8', '9', '10'],
+            answer: 1,
+            tip: 'Some as notas e divida por 3.'
+        },
+        {
+            title: 'Quantos minutos existem em 2 horas?',
+            expression: '2 × 60 = ?',
+            choices: ['100', '110', '120', '130'],
+            answer: 2,
+            tip: 'Cada hora tem 60 minutos.'
+        },
+        {
+            title: 'Calcule: 4² − 3².',
+            expression: '4² − 3² = ?',
+            choices: ['7', '10', '13', '16'],
+            answer: 0,
+            tip: 'Calcule cada quadrado antes de subtrair.'
+        },
+        {
+            title: 'João tem R$ 20,00 e gasta R$ 12,00. Quanto sobra?',
+            expression: '20 − 12 = ?',
+            choices: ['6', '7', '8', '9'],
+            answer: 2,
+            tip: 'Subtraia o gasto do total disponível.'
+        },
+        {
+            title: 'Qual é a probabilidade de obter cara em um lançamento de moeda?',
+            expression: '1 em 2 = ?',
+            choices: ['25%', '33%', '50%', '75%'],
+            answer: 2,
+            tip: 'Moeda justa tem duas faces.'
+        },
+        {
+            title: 'Se x = 2, quanto vale 2x² + 3?',
+            expression: '2x² + 3 com x = 2',
+            choices: ['11', '13', '15', '17'],
+            answer: 0,
+            tip: 'Calcule x² e depois multiplique por 2.'
+        },
+        {
+            title: 'Qual é a área de um quadrado de lado 5 cm?',
+            expression: '5 × 5 = ?',
+            choices: ['10', '15', '20', '25'],
+            answer: 3,
+            tip: 'Área do quadrado é lado vezes lado.'
+        },
+        {
+            title: 'Resolva: 9 × 4 − 8.',
+            expression: '9 × 4 − 8 = ?',
+            choices: ['24', '28', '30', '32'],
+            answer: 1,
+            tip: 'Multiplique primeiro, depois subtraia.'
+        },
+        {
+            title: 'Se 3x + 2 = 11, qual é o valor de x?',
+            expression: '3x + 2 = 11',
+            choices: ['2', '3', '4', '5'],
+            answer: 1,
+            tip: 'Subtraia 2 e depois divida por 3.'
+        },
+        {
+            title: 'Qual fração representa 50%?',
+            expression: '50% = ?',
+            choices: ['1/2', '1/3', '2/3', '3/4'],
+            answer: 0,
+            tip: '50% corresponde à metade.'
+        },
+        {
+            title: 'Um trem sai às 14h e chega às 17h. Quanto tempo dura a viagem?',
+            expression: '17h − 14h = ?',
+            choices: ['2h', '3h', '4h', '5h'],
+            answer: 1,
+            tip: 'Subtraia os horários de saída e chegada.'
+        },
+        {
+            title: 'Calcule: 5 + 5 × 2.',
+            expression: '5 + 5 × 2 = ?',
+            choices: ['15', '20', '25', '30'],
+            answer: 0,
+            tip: 'Multiplique antes de somar.'
+        },
+        {
+            title: 'Quantos graus tem um ângulo reto?',
+            expression: '∠ reto = ?',
+            choices: ['45°', '90°', '120°', '180°'],
+            answer: 1,
+            tip: 'Ângulo reto mede 90 graus.'
+        },
+        {
+            title: 'Qual é o perímetro de um retângulo de 8 cm por 3 cm?',
+            expression: '2(8 + 3) = ?',
+            choices: ['18', '20', '22', '24'],
+            answer: 2,
+            tip: 'Some largura e comprimento e multiplique por 2.'
+        },
+        {
+            title: 'Se x = 3, quanto vale 7 − x?',
+            expression: '7 − 3 = ?',
+            choices: ['3', '4', '5', '6'],
+            answer: 1,
+            tip: 'Subtraia o valor de x do número 7.'
+        },
+        {
+            title: 'Qual é o resultado de 16 ÷ 4?',
+            expression: '16 ÷ 4 = ?',
+            choices: ['2', '3', '4', '5'],
+            answer: 2,
+            tip: 'Divida 16 em 4 partes iguais.'
+        },
+        {
+            title: 'Calcule 10% de 200.',
+            expression: '10% de 200 = ?',
+            choices: ['10', '20', '30', '40'],
+            answer: 1,
+            tip: 'Dez por cento é um décimo do total.'
+        }
+    ],
+    dificil: [
+        {
+            title: 'Em uma progressão aritmética, o 5º termo é 18 e o 12º termo é 39. Qual é a razão dessa progressão?',
+            expression: 'a₅ = 18, a₁₂ = 39',
+            choices: ['2', '3', '4', '5'],
+            answer: 1,
+            tip: 'A razão é a diferença entre termos consecutivos.'
+        },
+        {
+            title: 'A função f(x) = 2x − 5 representa uma reta. Qual é o valor de f(3)?',
+            expression: 'f(x) = 2x − 5',
+            choices: ['1', '2', '3', '4'],
+            answer: 0,
+            tip: 'Substitua x por 3 na expressão.'
+        },
+        {
+            title: 'Um terreno retangular mede 10 m de largura por 6 m de comprimento. Qual é a área do terreno?',
+            expression: 'A = largura × comprimento',
+            choices: ['40 m²', '50 m²', '60 m²', '70 m²'],
+            answer: 2,
+            tip: 'Multiplique largura por comprimento.'
+        },
+        {
+            title: 'Numa urna há 3 bolas brancas e 2 pretas. Qual é a probabilidade de retirar uma bola branca?',
+            expression: 'P = brancas / total',
+            choices: ['2/5', '3/5', '1/2', '3/4'],
+            answer: 1,
+            tip: 'Divida a quantidade de bolas brancas pelo total de bolas.'
+        },
+        {
+            title: 'Em um triângulo, dois ângulos medem 50° e 60°. Quanto vale o terceiro ângulo?',
+            expression: '180 − 50 − 60 = ?',
+            choices: ['60°', '65°', '70°', '75°'],
+            answer: 2,
+            tip: 'A soma dos ângulos internos do triângulo é 180°.'
+        },
+        {
+            title: 'A temperatura sobe de 2°C para 8°C em 3 horas. Qual é a variação média por hora?',
+            expression: '(8 − 2) ÷ 3 = ?',
+            choices: ['1°C/h', '2°C/h', '3°C/h', '4°C/h'],
+            answer: 1,
+            tip: 'Divida a diferença pela quantidade de horas.'
+        },
+        {
+            title: 'Resolva a equação 3x + 4 = 19. Qual é x?',
+            expression: '3x + 4 = 19',
+            choices: ['4', '5', '6', '7'],
+            answer: 1,
+            tip: 'Subtraia 4 e depois divida por 3.'
+        },
+        {
+            title: 'Para a função quadrática f(x) = x² − 4x + 3, qual o valor de f(2)?',
+            expression: 'f(2) = 2² − 4×2 + 3',
+            choices: ['-1', '0', '1', '2'],
+            answer: 0,
+            tip: 'Substitua x por 2 e calcule cuidadosamente.'
+        },
+        {
+            title: 'O perímetro de um quadrado é 32 cm. Qual é o comprimento de cada lado?',
+            expression: 'P = 4 × lado',
+            choices: ['6 cm', '7 cm', '8 cm', '9 cm'],
+            answer: 2,
+            tip: 'Divida o perímetro por 4.'
+        },
+        {
+            title: 'Um vendedor recebe 20% de comissão sobre uma venda de R$ 150,00. Quanto ele recebe?',
+            expression: '0,20 × 150 = ?',
+            choices: ['R$ 25,00', 'R$ 30,00', 'R$ 35,00', 'R$ 40,00'],
+            answer: 1,
+            tip: 'Calcule vinte por cento do valor da venda.'
+        },
+        {
+            title: 'Numa planta, 1 cm representa 2 km. Qual é a distância real de um trecho de 7 cm?',
+            expression: '7 × 2 = ?',
+            choices: ['12 km', '14 km', '16 km', '18 km'],
+            answer: 1,
+            tip: 'Multiplique a medida pelo fator de escala.'
+        },
+        {
+            title: 'Em uma pesquisa com 12 alunos, 9 disseram preferir matemática. Qual é a porcentagem de alunos que responderam assim?',
+            expression: '(9 ÷ 12) × 100 = ?',
+            choices: ['60%', '65%', '70%', '75%'],
+            answer: 3,
+            tip: 'Divida o número de alunos pelo total e multiplique por 100.'
+        },
+        {
+            title: 'Qual fração representa o número decimal 0,125?',
+            expression: '0,125 = ?',
+            choices: ['1/8', '1/5', '1/4', '2/15'],
+            answer: 0,
+            tip: 'Converta o decimal em fração com denominador 8.'
+        },
+        {
+            title: 'Um reservatório de 600 L está com 25% da capacidade. Quantos litros há no reservatório?',
+            expression: '600 × 0,25 = ?',
+            choices: ['100', '125', '150', '175'],
+            answer: 2,
+            tip: 'Calcule um quarto da capacidade total.'
+        },
+        {
+            title: 'A relação entre duas quantidades é 3:5. Se a menor vale 12, quanto vale a maior?',
+            expression: '12 × (5/3) = ?',
+            choices: ['18', '20', '24', '30'],
+            answer: 1,
+            tip: 'Use a razão para encontrar a quantidade proporcional maior.'
+        },
+        {
+            title: 'Se R$ 1.800,00 representam 3/5 do salário de um trabalhador, qual é o valor total do salário?',
+            expression: '(1800 ÷ 3) × 5 = ?',
+            choices: ['R$ 2.700,00', 'R$ 3.000,00', 'R$ 3.200,00', 'R$ 3.500,00'],
+            answer: 1,
+            tip: 'Divida pelo numerador da fração e multiplique pelo denominador.'
+        },
+        {
+            title: 'Um carro percorre 180 km em 3 horas. Qual é sua velocidade média?',
+            expression: '180 ÷ 3 = ?',
+            choices: ['50 km/h', '55 km/h', '60 km/h', '65 km/h'],
+            answer: 2,
+            tip: 'Divida a distância pelo tempo de viagem.'
+        },
+        {
+            title: 'Qual é a soma dos ângulos internos de um quadrilátero convexo?',
+            expression: '?',
+            choices: ['180°', '270°', '360°', '450°'],
+            answer: 2,
+            tip: 'Use a fórmula geral para quadriláteros.'
+        },
+        {
+            title: 'Uma sequência numérica cresce de 5 em 5 a partir de 2. Qual é o 8º termo?',
+            expression: '2 + 7 × 5 = ?',
+            choices: ['32', '33', '37', '38'],
+            answer: 2,
+            tip: 'Adicione a razão repetidamente ao primeiro termo.'
+        },
+        {
+            title: 'Em uma progressão geométrica, o primeiro termo é 2 e o segundo termo é 6. Qual é o terceiro termo?',
+            expression: '2 × 3 = ?',
+            choices: ['9', '12', '18', '24'],
+            answer: 2,
+            tip: 'Multiplique pelo fator constante da progressão.'
+        }
+    ]
+};
+
+let questions = [];
+let currentDifficulty = null;
+let currentQuestion = 0;
+const answers = [];
+let xpEarned = 0;
+let levelUpResult = null;
+
+const difficultyScreen = document.querySelector('.difficulty-screen');
+const difficultyButtons = Array.from(document.querySelectorAll('.difficulty-button'));
+const selectedDifficultyName = document.querySelector('.selected-difficulty-name');
+const startQuizBtn = document.querySelector('.start-quiz-btn');
+const statusBar = document.querySelector('.status-bar');
+const mainSection = document.querySelector('.main');
+
+const questionCountText = document.querySelector('.question-count');
+const questionTitle = document.querySelector('.question-title');
+const expressionBox = document.querySelector('.expression');
+const answersBox = document.querySelector('.answers');
+const progressText = document.querySelector('.progress-top span');
+const progressBar = document.querySelector('.progress');
+const tipText = document.querySelector('.tip-card p');
+const prevBtn = document.querySelector('.prev-btn');
+const nextBtn = document.querySelector('.next-btn');
+const numberButtons = Array.from(document.querySelectorAll('.number'));
+const questionCard = document.querySelector('.question-card');
+const backBtn = document.querySelector('.back-btn');
+const exitBtn = document.querySelector('.exit-btn');
+const timerDisplay = document.getElementById('timer-display');
+
+let timerInterval = null;
+let timeRemaining = 1200; // 20 minutos em segundos
+
+function startQuiz(level) {
+    // Verificar se usuário está logado
+    if (!isUserLoggedIn()) {
+        location.href = 'telalogin.html';
+        return;
+    }
+
+    currentDifficulty = level;
+    questions = questionBanks[level];
+    answers.length = 0;
+    for (let i = 0; i < questions.length; i++) {
+        answers.push(null);
+    }
+    currentQuestion = 0;
+    timeRemaining = 1200; // Reinicia com 20 minutos
+    
+    // Adicionar 50 XP ao iniciar a avaliação
+    xpEarned = 50;
+    
+    difficultyScreen.classList.add('hidden');
+    statusBar.classList.remove('hidden');
+    mainSection.classList.remove('hidden');
+    startTimer();
+    renderQuestion();
+}
+
+function selectDifficulty(level, button) {
+    currentDifficulty = level;
+    selectedDifficultyName.textContent = level === 'facil' ? 'Fácil' : level === 'medio' ? 'Médio' : 'Difícil';
+    difficultyButtons.forEach(btn => btn.classList.toggle('active', btn === button));
+    startQuizBtn.disabled = false;
+}
+
+difficultyButtons.forEach(button => {
+    button.addEventListener('click', () => selectDifficulty(button.dataset.level, button));
+});
+
+startQuizBtn.addEventListener('click', () => {
+    if (currentDifficulty) {
+        // Verificar se usuário está logado
+        if (!isUserLoggedIn()) {
+            location.href = 'telalogin.html';
+            return;
+        }
+        startQuiz(currentDifficulty);
+    }
+});
+
+function formatProgress() {
+    return `${currentQuestion + 1} de ${questions.length} questões`;
+}
+
+function updateProgress() {
+    progressText.textContent = formatProgress();
+    progressBar.style.width = `${((currentQuestion + 1) / questions.length) * 100}%`;
+}
+
+function renderNumbers() {
+    numberButtons.forEach((button, index) => {
+        button.classList.toggle('active', index === currentQuestion);
+        button.classList.toggle('answered', answers[index] !== null);
+    });
+}
+
+function renderAnswers() {
+    const question = questions[currentQuestion];
+    answersBox.innerHTML = question.choices.map((choice, index) => `
+        <div class="answer ${answers[currentQuestion] === index ? 'active' : ''}" data-index="${index}">
+            <div class="answer-letter">${String.fromCharCode(65 + index)}</div>
+            <span>${choice}</span>
+        </div>
+    `).join('');
+
+    answersBox.querySelectorAll('.answer').forEach(answerElement => {
+        answerElement.addEventListener('click', () => {
+            const selectedIndex = Number(answerElement.dataset.index);
+            answers[currentQuestion] = selectedIndex;
+            renderAnswers();
+            renderNumbers();
+        });
+    });
+}
+
+function renderQuestion() {
+    const question = questions[currentQuestion];
+    questionCountText.textContent = `Questão ${currentQuestion + 1} de ${questions.length}`;
+    questionTitle.textContent = `${currentQuestion + 1}. ${question.title}`;
+    expressionBox.textContent = question.expression;
+    tipText.textContent = question.tip;
+    prevBtn.disabled = currentQuestion === 0;
+    nextBtn.textContent = currentQuestion === questions.length - 1 ? 'Finalizar avaliação' : 'Próxima questão →';
+    renderAnswers();
+    renderNumbers();
+    updateProgress();
+}
+
+function showResults() {
+    const correctCount = answers.reduce((total, answer, index) => total + (answer === questions[index].answer ? 1 : 0), 0);
+    const wrongCount = questions.length - correctCount;
+    const percentage = Math.round((correctCount / questions.length) * 100);
+    
+    // Calcular XP por acertos (50 por resposta correta)
+    xpEarned += correctCount * 50;
+    
+    // Adicionar XP ao usuário
+    levelUpResult = addXP(xpEarned);
+    
+    let performance = 'Continue praticando para melhorar ainda mais!';
+    if (percentage >= 90) {
+        performance = 'Excelente desempenho!';
+    } else if (percentage >= 70) {
+        performance = 'Bom desempenho!';
+    } else if (percentage >= 50) {
+        performance = 'Resultado razoável, tente revisar alguns conceitos.';
+    }
+    
+    const userInfo = getUserInfo();
+    let levelUpMessage = '';
+    
+    if (levelUpResult && levelUpResult.leveledUp) {
+        levelUpMessage = `
+            <div class="answer" style="background:#46ffb3; border-color:#46ffb3; color:#111;">
+                <div class="answer-letter">⭐</div>
+                <span style="font-weight:700;">PARABÉNS! Você subiu para o NÍVEL ${levelUpResult.newLevel}!</span>
+            </div>
+        `;
+    }
+
+    questionCard.innerHTML = `
+        <div>
+            <div class="question-top">
+                <div class="subject">📘 Resultado</div>
+                <div class="question-count">Avaliação concluída</div>
+            </div>
+            <h1 class="question-title">Você acertou ${correctCount} de ${questions.length} questões</h1>
+            <div class="expression" style="font-size:1.2rem; padding:1rem 1.2rem;">
+                ${percentage}% de aproveitamento
+            </div>
+            <div class="answers" style="display:grid; gap:1rem;">
+                <div class="answer" style="background:#152149; border-color:#46ffb3;">
+                    <div class="answer-letter">✓</div>
+                    <span>Acertos: ${correctCount}</span>
+                </div>
+                <div class="answer" style="background:#152149; border-color:#ff5b5b;">
+                    <div class="answer-letter">✕</div>
+                    <span>Erros: ${wrongCount}</span>
+                </div>
+                <div class="answer" style="background:#152149; border-color:#6f7cff;">
+                    <div class="answer-letter">💡</div>
+                    <span>${performance}</span>
+                </div>
+                <div class="answer" style="background:#152149; border-color:#ffd700;">
+                    <div class="answer-letter">🎁</div>
+                    <span>XP Ganho: +${xpEarned}</span>
+                </div>
+                <div class="answer" style="background:#152149; border-color:#6f7cff;">
+                    <div class="answer-letter">📊</div>
+                    <span>Nível ${userInfo.level} - ${userInfo.currentXP}/${calculateXPForLevel(userInfo.level + 1)} XP</span>
+                </div>
+                ${levelUpMessage}
+            </div>
+        </div>
+        <div class="bottom-buttons">
+            <button class="prev-btn" id="restart-btn">Refazer avaliação</button>
+            <button class="next-btn" id="review-btn">Ver respostas</button>
+        </div>
+    `;
+
+    document.getElementById('restart-btn').addEventListener('click', () => {
+        if (timerInterval) {
+            clearInterval(timerInterval);
+        }
+        answers.fill(null);
+        currentQuestion = 0;
+        xpEarned = 0;
+        levelUpResult = null;
+        location.reload();
+    });
+
+    document.getElementById('review-btn').addEventListener('click', () => {
+        renderReview();
+    });
+}
+
+function renderReview() {
+    const list = questions.map((question, index) => {
+        const selected = answers[index];
+        const correct = question.answer;
+        const answerText = selected === null ? 'Sem resposta' : question.choices[selected];
+        const correctText = question.choices[correct];
+        return `
+            <div class="answer" style="background:#152149; border-color: rgba(255,255,255,0.05); flex-direction:column; align-items:flex-start; gap:0.6rem;">
+                <strong>Questão ${index + 1}:</strong>
+                <span>${question.title}</span>
+                <span>Resposta escolhida: ${answerText}</span>
+                <span>Resposta correta: ${correctText}</span>
+            </div>
+        `;
+    }).join('');
+
+    questionCard.innerHTML = `
+        <div>
+            <div class="question-top">
+                <div class="subject">📘 Revisão de respostas</div>
+                <div class="question-count">${questions.length} questões</div>
+            </div>
+            <h1 class="question-title">Confira suas respostas</h1>
+            <div class="answers" style="display:grid; gap:1rem;">
+                ${list}
+            </div>
+        </div>
+        <div class="bottom-buttons">
+            <button class="prev-btn" id="restart-review-btn">Refazer avaliação</button>
+            <button class="next-btn" id="finish-btn">Voltar ao início</button>
+        </div>
+    `;
+
+    document.getElementById('restart-review-btn').addEventListener('click', () => {
+        if (timerInterval) {
+            clearInterval(timerInterval);
+        }
+        answers.fill(null);
+        currentQuestion = 0;
+        location.reload();
+    });
+
+    document.getElementById('finish-btn').addEventListener('click', () => {
+        if (timerInterval) {
+            clearInterval(timerInterval);
+        }
+        location.reload();
+    });
+}
+
+prevBtn.addEventListener('click', () => {
+    if (currentQuestion > 0) {
+        currentQuestion -= 1;
+        renderQuestion();
+    }
+});
+
+nextBtn.addEventListener('click', () => {
+    if (currentQuestion === questions.length - 1) {
+        showResults();
+        return;
+    }
+    currentQuestion += 1;
+    renderQuestion();
+});
+
+numberButtons.forEach((button, index) => {
+    button.addEventListener('click', () => {
+        currentQuestion = index;
+        renderQuestion();
+    });
+});
+
+backBtn.addEventListener('click', () => {
+    if (timerInterval) {
+        clearInterval(timerInterval);
+    }
+    location.href = 'telamenu.html';
+});
+
+exitBtn.addEventListener('click', () => {
+    if (timerInterval) {
+        clearInterval(timerInterval);
+    }
+    location.href = 'telamenu.html';
+});
+
+// Funções do cronometro
+function formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+}
+
+function updateTimer() {
+    if (timerDisplay) {
+        timerDisplay.textContent = formatTime(timeRemaining);
+    }
+    
+    if (timeRemaining <= 0) {
+        clearInterval(timerInterval);
+        endQuizDueToTimeout();
+    } else {
+        timeRemaining--;
+    }
+}
+
+function startTimer() {
+    if (timerInterval) {
+        clearInterval(timerInterval);
+    }
+    timerDisplay.textContent = formatTime(timeRemaining);
+    timerInterval = setInterval(updateTimer, 1000);
+}
+
+function endQuizDueToTimeout() {
+    showResults();
+}
+
+// Ao carregar a página, verificar se usuário está logado
+window.addEventListener('load', () => {
+    if (!isUserLoggedIn()) {
+        location.href = 'telalogin.html';
+    }
+});
 
 </body>
 </html>
