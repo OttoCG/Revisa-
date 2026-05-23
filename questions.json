@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "question": "Qual é a solução da equação 2x + 3 = 11?",
+    "choices": ["x = 3", "x = 4", "x = 5", "x = 6"],
+    "answer": 1,
+    "tip": "Isolar x subtraindo 3 e dividindo por 2.",
+    "explanation": "2x + 3 = 11 => 2x = 8 => x = 4.",
+    "solution": "Passo 1: Subtraia 3 dos dois lados: 2x + 3 - 3 = 11 - 3 → 2x = 8\nPasso 2: Divida ambos os lados por 2: 2x ÷ 2 = 8 ÷ 2 → x = 4\nResposta correta: x = 4"
+  },
+  {
+    "id": 2,
+    "question": "Uma pizza é dividida em 8 fatias. Se João comeu 3 fatias, qual fração da pizza resta?",
+    "choices": ["3/8", "5/8", "1/2", "2/3"],
+    "answer": 1,
+    "tip": "Subtraia as fatias comidas do total.",
+    "explanation": "Total 8 fatias, restam 8 - 3 = 5 => 5/8.",
+    "solution": "Passo 1: O total de fatias é 8\nPasso 2: João comeu 3 fatias\nPasso 3: Subtraia o consumido do total: 8 - 3 = 5 fatias restantes\nPasso 4: Escreva como fração: 5 fatias de 8 total = 5/8\nResposta correta: 5/8"
+  },
+  {
+    "id": 3,
+    "question": "Qual é a área de um triângulo com base 10 e altura 6?",
+    "choices": ["30", "60", "16", "40"],
+    "answer": 0,
+    "tip": "Área = (base * altura) / 2.",
+    "explanation": "(10 * 6) / 2 = 30.",
+    "solution": "Passo 1: A fórmula da área do triângulo é: Área = (base × altura) ÷ 2\nPasso 2: Substitua os valores: base = 10, altura = 6\nPasso 3: Calcule o numerador: 10 × 6 = 60\nPasso 4: Divida por 2: 60 ÷ 2 = 30\nResposta correta: 30 unidades quadradas"
+  },
+  {
+    "id": 4,
+    "question": "Se um produto custa R$80 e recebe desconto de 25%, qual será o preço final?",
+    "choices": ["R$60", "R$56", "R$20", "R$64"],
+    "answer": 0,
+    "tip": "Desconto de 25% = multiplicar por 0.75 ou subtrair 25% do valor.",
+    "explanation": "80 * 0.75 = R$60.",
+    "solution": "Passo 1: Calcule 25% de R$80: 25% = 25/100 = 0,25\nPasso 2: 0,25 × 80 = R$20 (valor do desconto)\nPasso 3: Subtraia do preço original: 80 - 20 = R$60\nOu método direto: 80 × 0,75 = R$60\nResposta correta: R$60"
+  },
+  {
+    "id": 5,
+    "question": "Qual a expressão fatorada de x^2 - 9?",
+    "choices": ["(x+3)^2", "(x-3)^2", "(x+3)(x-3)", "(x+9)(x-1)"],
+    "answer": 2,
+    "tip": "Reconheça diferença de quadrados: a^2 - b^2 = (a-b)(a+b).",
+    "explanation": "x^2 - 9 = (x-3)(x+3).",
+    "solution": "Passo 1: Identifique a diferença de quadrados: x² - 9\nPasso 2: Reescreva 9 como 3²: x² - 3²\nPasso 3: Use a fórmula: a² - b² = (a - b)(a + b)\nPasso 4: Aplique com a = x, b = 3: (x - 3)(x + 3)\nResposta correta: (x + 3)(x - 3)"
+  },
+  {
+    "id": 6,
+    "question": "Uma função linear f(x) = 2x + 1 tem f(3) igual a:",
+    "choices": ["5", "7", "3", "6"],
+    "answer": 1,
+    "tip": "Substitua x por 3.",
+    "explanation": "f(3) = 2*3 + 1 = 7.",
+    "solution": "Passo 1: Temos a função f(x) = 2x + 1\nPasso 2: Queremos encontrar f(3), então substitua x por 3\nPasso 3: f(3) = 2(3) + 1\nPasso 4: f(3) = 6 + 1\nPasso 5: f(3) = 7\nResposta correta: 7"
+  },
+  {
+    "id": 7,
+    "question": "Qual é a probabilidade de tirar um número par ao lançar um dado comum (1-6)?",
+    "choices": ["1/6", "1/3", "1/2", "2/3"],
+    "answer": 2,
+    "tip": "Números pares: 2,4,6 => 3 resultados de 6.",
+    "explanation": "3/6 = 1/2.",
+    "solution": "Passo 1: Identifique os números pares no dado: 2, 4, 6\nPasso 2: Conte os números pares: 3 números\nPasso 3: O dado tem 6 faces (1, 2, 3, 4, 5, 6)\nPasso 4: Probabilidade = casos favoráveis / casos totais\nPasso 5: P = 3/6 = 1/2\nResposta correta: 1/2 ou 50%"
+  },
+  {
+    "id": 8,
+    "question": "Resolva a inequação: 3x - 4 &gt; 5.",
+    "choices": ["x &gt; 3", "x &lt; 3", "x &gt; 1", "x &lt; 1"],
+    "answer": 0,
+    "tip": "Isolar x somando 4 e dividindo por 3.",
+    "explanation": "3x -4 >5 => 3x >9 => x >3.",
+    "solution": "Passo 1: Comece com a inequação: 3x - 4 > 5\nPasso 2: Some 4 aos dois lados: 3x - 4 + 4 > 5 + 4 → 3x > 9\nPasso 3: Divida ambos os lados por 3: 3x ÷ 3 > 9 ÷ 3 → x > 3\nPasso 4: Qualquer valor de x maior que 3 satisfaz a inequação\nResposta correta: x > 3"
+  },
+  {
+    "id": 9,
+    "question": "Qual é a média aritmética dos números 4, 7 e 10?",
+    "choices": ["7", "6.5", "8", "5.5"],
+    "answer": 0,
+    "tip": "Soma dos números dividida pela quantidade.",
+    "explanation": "(4+7+10)/3 = 21/3 = 7.",
+    "solution": "Passo 1: Identifique os números: 4, 7, 10\nPasso 2: Some todos os números: 4 + 7 + 10 = 21\nPasso 3: Conte quantos números existem: 3 números\nPasso 4: Divida a soma pela quantidade: 21 ÷ 3 = 7\nResposta correta: 7"
+  },
+  {
+    "id": 10,
+    "question": "Um carro percorre 150 km em 3 horas. Qual a velocidade média?",
+    "choices": ["45 km/h", "50 km/h", "75 km/h", "30 km/h"],
+    "answer": 1,
+    "tip": "Velocidade média = distância / tempo.",
+    "explanation": "150 / 3 = 50 km/h.",
+    "solution": "Passo 1: Identifique os dados: distância = 150 km, tempo = 3 horas\nPasso 2: Use a fórmula: Velocidade média = Distância ÷ Tempo\nPasso 3: Substitua os valores: Velocidade média = 150 ÷ 3\nPasso 4: Calcule o resultado: 150 ÷ 3 = 50\nResposta correta: 50 km/h"
+  }
+]

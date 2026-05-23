@@ -12,6 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="stylemenu.css">
 
 <style>
 *{
@@ -34,8 +35,6 @@ body{
     overflow:hidden;
 }
 
-/* CONTAINER */
-
 .container{
     width:100%;
     height:100vh;
@@ -45,7 +44,6 @@ body{
     overflow:hidden;
 }
 
-/* SIDEBAR */
 
 .sidebar{
     width:240px;
@@ -67,7 +65,6 @@ body{
     border-right:1px solid rgba(255,255,255,0.05);
 }
 
-/* LOGO */
 
 .logo h1{
     color:#52ffbe;
@@ -85,80 +82,60 @@ body{
     line-height:1.5;
 }
 
-/* MENU */
 
-.menu{
-    margin-top:28px;
+.menu{        
+    margin-top:50px;
 }
 
-.menu ul{
-    list-style:none;
-}
+.menu ul{list-style:none}
 
 .menu li{
-    height:46px;
-
-    padding:0 14px;
-
-    margin-bottom:10px;
-
-    border-radius:14px;
-
+    padding:18px;
+    margin-bottom:15px;
+    border-radius:18px;
     border:1px solid rgba(255,255,255,0.15);
-
-    display:flex;
-    align-items:center;
-
-    font-size:13px;
-
     cursor:pointer;
-
     transition:0.3s;
 }
+
+.menu li a{ display:block; width:100%; color:inherit; text-decoration:none }
 
 .menu li:hover{
     background:#52ffbe;
     color:#111;
-
-    transform:translateX(4px);
+    border-color:#52ffbe;
+    transform:translateX(5px);
+    box-shadow:0 0 15px rgba(82,255,190,0.35);
 }
 
 .active{
     background:rgba(82,255,190,0.12);
-
     border-color:#52ffbe !important;
-
     color:#52ffbe;
 }
-
-/* BOTÃO */
 
 .logout{
     height:46px;
 
     border:none;
-
+    padding:10px 12px;
     border-radius:14px;
-
     background:transparent;
-
-    border:1px solid rgba(255,255,255,0.15);
-
+    border:1px solid rgba(255,255,255,0.12);
     color:white;
-
     font-size:13px;
-
     cursor:pointer;
-
-    transition:0.3s;
+    transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+    box-shadow:0 6px 18px rgba(11,16,32,0.25);
 }
 
 .logout:hover{
-    background:#52ffbe;
-    color:#111;
+    background:linear-gradient(90deg,#3ee8b1,#52ffbe);
+    color:#081017;
+    transform:translateY(-3px);
+    box-shadow:0 18px 40px rgba(82,255,190,0.12);
 }
 
-/* CONTENT */
 
 .content{
     flex:1;
@@ -174,8 +151,6 @@ body{
 
     overflow:hidden;
 }
-
-/* TOPO */
 
 .topbar{
     display:flex;
@@ -221,8 +196,6 @@ body{
     font-size:20px;
 }
 
-/* TITULO */
-
 .welcome h2{
     color:#52ffbe;
 
@@ -236,8 +209,6 @@ body{
 
     font-size:14px;
 }
-
-/* GRID */
 
 .review-layout{
     flex:1;
@@ -253,8 +224,6 @@ body{
     overflow:hidden;
 }
 
-/* COLUNAS */
-
 .review-left,
 .review-right{
     display:flex;
@@ -264,8 +233,6 @@ body{
 
     min-height:0;
 }
-
-/* CARD PRINCIPAL */
 
 .main-review-card{
     flex:1;
@@ -333,30 +300,23 @@ body{
 }
 
 .review-btn{
-    width:200px;
-    height:46px;
-
+    width:220px;
+    height:48px;
     margin-top:18px;
-
     border:none;
-
     border-radius:14px;
-
-    background:#52ffbe;
-
-    color:#111;
-
-    font-weight:600;
-
-    font-size:14px;
-
+    background:linear-gradient(90deg,#3ee8b1,#52ffbe);
+    color:#081017;
+    font-weight:700;
+    font-size:15px;
     cursor:pointer;
-
-    transition:0.3s;
+    transition:transform .18s ease, box-shadow .18s ease, opacity .12s ease;
+    box-shadow:0 12px 28px rgba(82,255,190,0.12);
 }
 
 .review-btn:hover{
-    transform:translateY(-2px);
+    transform:translateY(-6px);
+    box-shadow:0 28px 60px rgba(82,255,190,0.18);
 }
 
 .main-review-icon{
@@ -377,8 +337,6 @@ body{
 
     color:#52ffbe;
 }
-
-/* SUBJECTS */
 
 .subjects-section{
     display:grid;
@@ -402,6 +360,24 @@ body{
     border:1px solid rgba(255,255,255,0.05);
 
     transition:0.3s;
+}
+
+.card-cta{
+    margin-top:14px;
+    display:inline-block;
+    padding:10px 12px;
+    border-radius:12px;
+    background:linear-gradient(90deg,#3ee8b1,#52ffbe);
+    color:#081017;
+    font-weight:600;
+    border:none;
+    cursor:pointer;
+    transition:transform .15s ease, box-shadow .15s ease;
+    box-shadow:0 10px 24px rgba(82,255,190,0.08);
+}
+.card-cta:hover{
+    transform:translateY(-4px);
+    box-shadow:0 20px 44px rgba(82,255,190,0.14);
 }
 
 .subject-card:hover{
@@ -441,8 +417,6 @@ body{
     line-height:1.6;
 }
 
-/* SIDE CARDS */
-
 .side-card{
     background:linear-gradient(
         180deg,
@@ -464,8 +438,6 @@ body{
 
     margin-bottom:16px;
 }
-
-/* PROGRESS */
 
 .progress-info{
     display:flex;
@@ -504,8 +476,6 @@ body{
     background:#52ffbe;
 }
 
-/* EXERCISES */
-
 .exercise-item{
     display:flex;
     justify-content:space-between;
@@ -527,8 +497,6 @@ body{
     color:#ff6b6b;
 }
 
-/* REWARDS */
-
 .reward-item{
     display:flex;
     align-items:center;
@@ -548,7 +516,6 @@ body{
     font-size:13px;
 }
 
-/* FOOTER */
 
 footer{
     text-align:center;
@@ -558,7 +525,6 @@ footer{
     font-size:11px;
 }
 
-/* RESPONSIVO */
 
 @media(max-width:1200px){
 
@@ -625,8 +591,6 @@ footer{
 
 <div class="container">
 
-    <!-- SIDEBAR -->
-
     <aside class="sidebar">
 
         <div>
@@ -645,19 +609,19 @@ footer{
 
                 <ul>
 
-                    <li>🏠 Início</li>
+                    <li><a href="telamenu.html">🏠 Início</a></li>
 
-                    <li>👤 Área do aluno</li>
+                    <li><a href="TelaAreaDoAluno.html">👤 Área do aluno</a></li>
 
-                    <li>📝 Avaliação Diagnóstica</li>
+                    <li><a href="TelaAvaliaçãoDiagnóstica.html">📝 Avaliação Diagnóstica</a></li>
 
-                    <li class="active">📖 Revisar</li>
+                    <li class="active"><a href="TelaRevisar.html">📖 Revisar</a></li>
 
-                    <li>📈 Progresso</li>
+                    <li><a href="TelaProgresso.html">📈 Progresso</a></li>
 
-                    <li>ℹ️ Sobre</li>
+                    <li><a href="TelaSobre.html">ℹ️ Sobre</a></li>
 
-                    <li>⚙️ Configurações</li>
+                    <li><a href="TelaConfiguracoes.html">⚙️ Configurações</a></li>
 
                 </ul>
 
@@ -665,7 +629,7 @@ footer{
 
         </div>
 
-        <button class="logout">
+        <button class="logout" onclick="location.href='telalogin.html'">
 
             ↩ Sair
 
@@ -673,11 +637,7 @@ footer{
 
     </aside>
 
-    <!-- CONTENT -->
-
     <main class="content">
-
-        <!-- TOPO -->
 
         <header class="topbar">
 
@@ -701,8 +661,6 @@ footer{
 
         </header>
 
-        <!-- TÍTULO -->
-
         <section class="welcome">
 
             <h2>Revisar Matemática</h2>
@@ -713,15 +671,9 @@ footer{
 
         </section>
 
-        <!-- GRID PRINCIPAL -->
-
         <section class="review-layout">
 
-            <!-- ESQUERDA -->
-
             <div class="review-left">
-
-                <!-- CARD PRINCIPAL -->
 
                 <div class="main-review-card">
 
@@ -744,7 +696,7 @@ footer{
 
                         </p>
 
-                        <button class="review-btn">
+                        <button class="review-btn" onclick="location.href='TelaAulaRevisao.html'">
 
                             ▶ Iniciar revisão
 
@@ -760,8 +712,6 @@ footer{
 
                 </div>
 
-                <!-- CONTEÚDOS -->
-
                 <div class="subjects-section">
 
                     <div class="subject-card">
@@ -773,6 +723,8 @@ footer{
                         <p>
                             Operações, simplificação e problemas.
                         </p>
+
+                        <button class="card-cta" onclick="location.href='TelaAulaRevisao.html'">Revisar</button>
 
                     </div>
 
@@ -786,6 +738,8 @@ footer{
                             Área, perímetro e figuras geométricas.
                         </p>
 
+                        <button class="card-cta" onclick="location.href='TelaAulaRevisao.html'">Revisar</button>
+
                     </div>
 
                     <div class="subject-card">
@@ -797,6 +751,8 @@ footer{
                         <p>
                             Cálculos percentuais e descontos.
                         </p>
+
+                        <button class="card-cta" onclick="location.href='TelaAulaRevisao.html'">Revisar</button>
 
                     </div>
 
@@ -810,17 +766,15 @@ footer{
                             Expressões e equações matemáticas.
                         </p>
 
+                        <button class="card-cta" onclick="location.href='TelaAulaRevisao.html'">Revisar</button>
+
                     </div>
 
                 </div>
 
             </div>
 
-            <!-- DIREITA -->
-
             <div class="review-right">
-
-                <!-- PROGRESSO -->
 
                 <div class="side-card">
 
@@ -854,8 +808,6 @@ footer{
 
                 </div>
 
-                <!-- EXERCÍCIOS -->
-
                 <div class="side-card">
 
                     <h2>📝 Exercícios recentes</h2>
@@ -886,8 +838,6 @@ footer{
 
                 </div>
 
-                <!-- RECOMPENSAS -->
-
                 <div class="side-card">
 
                     <h2>🏆 Recompensas</h2>
@@ -913,8 +863,6 @@ footer{
             </div>
 
         </section>
-
-        <!-- FOOTER -->
 
         <footer>
 

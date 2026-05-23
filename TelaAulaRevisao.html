@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Revisa+ | Aula de Revisão</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="stylemenu.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;min-height:100%;}
+body{font-family:'Poppins',sans-serif;background:#0f1020;color:#fff;overflow:auto}
+.container{display:flex;min-height:100vh}
+.sidebar{width:15%;background:linear-gradient(180deg,#1d1f39,#151628);padding:30px 20px;display:flex;flex-direction:column;justify-content:space-between}
+.logo h1{color:#52ffbe;font-size:42px;margin-bottom:10px}
+.logo p{color:#aaffd7;line-height:1.5}
+.content{flex:1;padding:30px 40px;display:flex;flex-direction:column;gap:15px}
+.card{background:linear-gradient(180deg,#121936,#0e1430);padding:30px;border-radius:16px;border:1px solid rgba(255,255,255,0.05)}
+.question-area{margin-top:18px}
+.question-title{font-size:26px;font-weight:600;color:#52ffbe;margin-bottom:20px}
+.explanation-before{margin:20px 0;background:linear-gradient(135deg,rgba(82,255,190,0.1),rgba(82,255,190,0.04));padding:20px;border-radius:12px;border:1px solid rgba(82,255,190,0.2);color:#e3f9ee;line-height:1.8}
+.explanation-before strong{color:#a3ffcb;display:block;margin-top:12px;margin-bottom:6px;font-size:15px}
+.explanation-before .step{margin:8px 0;padding-left:14px;border-left:3px solid #52ffbe}
+.reveal-btn{margin:20px 0;padding:12px 24px;background:linear-gradient(90deg,#3ee8b1,#52ffbe);color:#081017;border:none;border-radius:12px;font-weight:700;cursor:pointer;transition:transform .2s ease, box-shadow .2s ease;box-shadow:0 10px 24px rgba(82,255,190,0.12)}
+.reveal-btn:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(82,255,190,0.16)}
+.choices-section{display:none;margin-top:20px}
+.choices-section.show{display:block}
+.choices{display:flex;flex-direction:column;gap:12px}
+.choice{background:rgba(255,255,255,0.04);padding:14px;border-radius:12px;cursor:pointer;border:1px solid rgba(255,255,255,0.08);transition:all .2s ease}
+.choice:hover:not(.disabled){background:rgba(82,255,190,0.05);border-color:#52ffbe}
+.choice.selected{background:#52ffbe;color:#081017;border-color:#52ffbe}
+.choice.correct{background:rgba(82,255,190,0.12);border-color:#52ffbe}
+.choice.incorrect{background:rgba(255,107,107,0.12);border-color:#ff6b6b}
+.choice.disabled{cursor:not-allowed;opacity:0.7}
+.reveal-answer-btn{margin-top:14px;padding:10px 16px;background:transparent;border:1px solid rgba(82,255,190,0.3);color:#52ffbe;border-radius:10px;cursor:pointer;font-size:13px;font-weight:600;transition:all .2s ease}
+.reveal-answer-btn:hover{background:rgba(82,255,190,0.1);border-color:#52ffbe}
+.footer-actions{display:flex;justify-content:space-between;margin-top:20px;gap:12px}
+.btn{padding:12px 18px;border-radius:12px;border:none;cursor:pointer;font-weight:600;transition:all .2s ease}
+.btn.next{background:linear-gradient(90deg,#3ee8b1,#52ffbe);color:#081017;box-shadow:0 10px 24px rgba(82,255,190,0.12)}
+.btn.next:hover:not(:disabled){transform:translateY(-3px);box-shadow:0 16px 40px rgba(82,255,190,0.16)}
+.btn.next:disabled{opacity:0.5;cursor:not-allowed}
+.result{text-align:center;padding:20px}
+@media(max-width:900px){.container{flex-direction:column}.sidebar{width:100%;height:auto;margin-bottom:20px}.content{padding:20px}}
+</style>
+</head>
+<body>
+<div class="container">
+  <aside class="sidebar">
+    <div>
+      <div class="logo"><h1>Revisa+</h1><p style="color:#aaffd7;font-size:12px">Revise com foco</p></div>
+      <nav class="menu">
+        <ul>
+          <li><a href="telamenu.html">🏠 Início</a></li>
+          <li><a href="TelaAreaDoAluno.html">👤 Área do aluno</a></li>
+          <li><a href="TelaAvaliaçãoDiagnóstica.html">📝 Avaliação Diagnóstica</a></li>
+          <li class="active"><a href="TelaRevisar.html">📖 Revisar</a></li>
+          <li><a href="TelaProgresso.html">📈 Progresso</a></li>
+          <li><a href="TelaSobre.html">ℹ️ Sobre</a></li>
+          <li><a href="TelaConfiguracoes.html">⚙️ Configurações</a></li>
+        </ul>
+      </nav>
+    </div>
+    <button class="logout" onclick="logout(); location.href='telalogin.html'">↩ Sair</button>
+  </aside>
+  <main class="content">
+    <header style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+      <div>
+        <h2 style="color:#52ffbe;font-size:32px;margin-bottom:4px">Aula de Revisão — Matemática</h2>
+        <p style="color:#cfcfcf;font-size:14px">Estude com a explicação passo-a-passo antes de responder</p>
+      </div>
+      <div id="progressText" style="color:#d0d0d0;font-size:16px;font-weight:600">Questão 0/10</div>
+    </header>
+
+    <section class="card">
+      <div id="quiz" class="question-area">
+        <div id="questionBlock">
+          <h2 id="questionTitle" class="question-title">Carregando perguntas...</h2>
+          <div id="explanationBefore" class="explanation-before" style="display:none"></div>
+          <button id="revealBtn" class="reveal-btn" style="display:none">Entendi, mostrar as opções de resposta</button>
+          <div id="choicesSection" class="choices-section">
+            <p style="margin-bottom:12px;color:#d0d0d0;font-size:14px">Escolha a resposta correta:</p>
+            <div class="choices" id="choices"></div>
+          </div>
+        </div>
+        <div class="footer-actions">
+          <div></div>
+          <div>
+            <button id="nextBtn" class="btn next" disabled>Próxima pergunta</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="result" class="result" style="display:none">
+        <h2 id="resultTitle"></h2>
+        <p id="resultText"></p>
+        <button class="btn next" onclick="location.href='telamenu.html'">Voltar ao Início</button>
+      </div>
+
+    </section>
+  </main>
+</div>
+
+<script src="userSystem.js"></script>
+<script>
+let questions = [];
+let current = 0;
+let correctCount = 0;
+let selectedIndex = null;
+let answersRevealed = false;
+
+async function loadQuestions(){
+  try{
+    const res = await fetch('questions.json');
+    const data = await res.json();
+    questions = data.slice(0,10);
+    current = 0; correctCount = 0;
+    showQuestion();
+  }catch(e){
+    document.getElementById('questionTitle').textContent = 'Erro ao carregar perguntas.';
+  }
+}
+
+function showQuestion(){
+  if(current >= questions.length){
+    finishQuiz(); return;
+  }
+  const q = questions[current];
+  answersRevealed = false;
+  selectedIndex = null;
+  
+  // Atualizar progresso
+  document.getElementById('progressText').textContent = `Questão ${current+1}/${questions.length}`;
+  
+  // Mostrar pergunta
+  document.getElementById('questionTitle').textContent = q.question;
+  
+  // Mostrar explicação e dica ANTES das opções
+  const explBefore = document.getElementById('explanationBefore');
+  const solutionLines = q.solution ? q.solution.split('\n').map(line => `<div class="step">${line}</div>`).join('') : '';
+  explBefore.innerHTML = `
+    <strong>💡 Dica para resolver:</strong>
+    <div style="margin: 8px 0;">${q.tip}</div>
+    <strong>📖 Como resolver passo-a-passo:</strong>
+    ${solutionLines}
+  `;
+  explBefore.style.display = 'block';
+  
+  // Mostrar botão para revelar opções
+  const revealBtn = document.getElementById('revealBtn');
+  revealBtn.style.display = 'block';
+  revealBtn.onclick = revealChoices;
+  
+  // Esconder opções e resultados
+  document.getElementById('choicesSection').classList.remove('show');
+  document.getElementById('nextBtn').disabled = true;
+  document.getElementById('nextBtn').textContent = 'Próxima pergunta';
+}
+
+function revealChoices(){
+  const q = questions[current];
+  const choicesEl = document.getElementById('choices');
+  choicesEl.innerHTML = '';
+  
+  // Renderizar opções
+  q.choices.forEach((c,i)=>{
+    const div = document.createElement('div');
+    div.className = 'choice';
+    div.textContent = c;
+    div.onclick = ()=>selectChoice(i);
+    choicesEl.appendChild(div);
+  });
+  
+  // Mostrar seção de opções e esconder botão
+  document.getElementById('choicesSection').classList.add('show');
+  document.getElementById('revealBtn').style.display = 'none';
+  answersRevealed = true;
+}
+
+function selectChoice(i){
+  if(!answersRevealed) return;
+  selectedIndex = i;
+  const choiceEls = document.querySelectorAll('.choice');
+  choiceEls.forEach((el,idx)=>{
+    el.classList.toggle('selected', idx===i);
+  });
+  document.getElementById('nextBtn').disabled = false;
+}
+
+function nextQuestion(){
+  if(!answersRevealed || selectedIndex === null) return;
+  
+  const q = questions[current];
+  const choiceEls = document.querySelectorAll('.choice');
+  
+  // Marcar respostas
+  choiceEls.forEach((el,idx)=>{
+    el.classList.remove('selected');
+    el.onclick = null;
+    el.classList.add('disabled');
+    if(idx === q.answer) el.classList.add('correct');
+    if(idx === selectedIndex && idx !== q.answer) el.classList.add('incorrect');
+  });
+  
+  if(selectedIndex === q.answer) correctCount++;
+  
+  // Mostrar resultado
+  showResult();
+  
+  // Avançar após 2s
+  setTimeout(()=>{
+    current++;
+    selectedIndex = null;
+    showQuestion();
+  },2000);
+}
+
+function showResult(){
+  const q = questions[current];
+  const resultEl = document.createElement('div');
+  resultEl.style.cssText = 'margin-top:16px;padding:14px;background:rgba(82,255,190,0.12);border-radius:10px;border-left:4px solid #52ffbe;color:#a3ffcb;font-weight:600';
+  
+  if(selectedIndex === q.answer){
+    resultEl.innerHTML = '✓ Parabéns! Resposta correta!';
+  }else{
+    resultEl.innerHTML = `✗ Resposta incorreta. A resposta correta era: <strong>${q.choices[q.answer]}</strong>`;
+  }
+  
+  const choicesSection = document.getElementById('choicesSection');
+  const existing = choicesSection.querySelector('div[style*="background:rgba(82,255,190,0.12)"]');
+  if(existing) existing.remove();
+  choicesSection.appendChild(resultEl);
+  
+  document.getElementById('nextBtn').disabled = true;
+}
+
+function finishQuiz(){
+  document.getElementById('quiz').style.display = 'none';
+  const resEl = document.getElementById('result');
+  resEl.style.display = 'block';
+  const percent = Math.round((correctCount/questions.length)*100);
+  document.getElementById('resultTitle').textContent = `Você acertou ${correctCount}/${questions.length}`;
+  document.getElementById('resultText').textContent = `Pontuação: ${percent}%`;
+  try{ if(typeof recordReview === 'function') recordReview(correctCount, questions.length); }catch(e){}
+}
+
+document.getElementById('nextBtn').addEventListener('click', nextQuestion);
+
+loadQuestions();
+</script>
+</body>
+</html>

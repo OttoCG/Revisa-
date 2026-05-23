@@ -11,13 +11,13 @@ body {
     font-family: 'Roboto', sans-serif; /* definir a fonte para o corpo do documento caso a importada acima não seja carregada */
     min-height: 100vh;
     width: 100%;
-    background: #201b2c;
+    background: #0f1020;
 }
 
 .main-login{
     width: 100%;
     min-height: 100vh; /* viewport height - 100vh é 100% da tela em vertical */
-    background: #201b2c;
+    background: #0f1020;
     display: flex; /* deixar div lado a lado */
     justify-content: center; /* centraliza no eixo X para o centro */
     align-items: center;
