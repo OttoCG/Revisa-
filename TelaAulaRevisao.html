@@ -32,8 +32,10 @@ body{font-family:'Poppins',sans-serif;background:#0f1020;color:#fff;overflow:aut
 .choice.correct{background:rgba(82,255,190,0.12);border-color:#52ffbe}
 .choice.incorrect{background:rgba(255,107,107,0.12);border-color:#ff6b6b}
 .choice.disabled{cursor:not-allowed;opacity:0.7}
-.reveal-answer-btn{margin-top:14px;padding:10px 16px;background:transparent;border:1px solid rgba(82,255,190,0.3);color:#52ffbe;border-radius:10px;cursor:pointer;font-size:13px;font-weight:600;transition:all .2s ease}
-.reveal-answer-btn:hover{background:rgba(82,255,190,0.1);border-color:#52ffbe}
+.action-buttons{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap}
+.reveal-answer-btn{padding:10px 16px;background:transparent;border:2px solid #ffd54d;color:#ffd54d;border-radius:10px;cursor:pointer;font-size:13px;font-weight:600;transition:all .2s ease}
+.reveal-answer-btn:hover:not(:disabled){background:rgba(255,213,77,0.1);box-shadow:0 6px 16px rgba(255,213,77,0.15)}
+.reveal-answer-btn:disabled{opacity:0.5;cursor:not-allowed}
 .footer-actions{display:flex;justify-content:space-between;margin-top:20px;gap:12px}
 .btn{padding:12px 18px;border-radius:12px;border:none;cursor:pointer;font-weight:600;transition:all .2s ease}
 .btn.next{background:linear-gradient(90deg,#3ee8b1,#52ffbe);color:#081017;box-shadow:0 10px 24px rgba(82,255,190,0.12)}
@@ -80,6 +82,9 @@ body{font-family:'Poppins',sans-serif;background:#0f1020;color:#fff;overflow:aut
           <div id="choicesSection" class="choices-section">
             <p style="margin-bottom:12px;color:#d0d0d0;font-size:14px">Escolha a resposta correta:</p>
             <div class="choices" id="choices"></div>
+            <div id="actionBtns" class="action-buttons" style="display:none">
+              <button id="revealAnswerBtn" class="reveal-answer-btn">Revelar resposta correta</button>
+            </div>
           </div>
         </div>
         <div class="footer-actions">
@@ -107,6 +112,7 @@ let current = 0;
 let correctCount = 0;
 let selectedIndex = null;
 let answersRevealed = false;
+let answerRevealed = false;
 
 async function loadQuestions(){
   try{
@@ -126,6 +132,7 @@ function showQuestion(){
   }
   const q = questions[current];
   answersRevealed = false;
+  answerRevealed = false;
   selectedIndex = null;
   
   // Atualizar progresso
@@ -189,6 +196,15 @@ function selectChoice(i){
 function nextQuestion(){
   if(!answersRevealed || selectedIndex === null) return;
   
+  // Se a resposta já foi revelada, avança para próxima pergunta
+  if(answerRevealed){
+    current++;
+    selectedIndex = null;
+    answerRevealed = false;
+    showQuestion();
+    return;
+  }
+  
   const q = questions[current];
   const choiceEls = document.querySelectorAll('.choice');
   
@@ -205,32 +221,53 @@ function nextQuestion(){
   
   // Mostrar resultado
   showResult();
-  
-  // Avançar após 2s
-  setTimeout(()=>{
-    current++;
-    selectedIndex = null;
-    showQuestion();
-  },2000);
 }
 
 function showResult(){
   const q = questions[current];
+  const choicesSection = document.getElementById('choicesSection');
+  const actionBtns = document.getElementById('actionBtns');
+  
+  // Desabilitar cliques nas opções
+  document.querySelectorAll('.choice').forEach(c=>{
+    c.onclick = null;
+    c.classList.add('disabled');
+  });
+  
+  // Mostrar botão para revelar resposta
+  actionBtns.style.display = 'flex';
+  const revealBtn = document.getElementById('revealAnswerBtn');
+  revealBtn.disabled = false;
+  revealBtn.onclick = ()=>{
+    revealCorrectAnswer();
+  };
+  
+  document.getElementById('nextBtn').disabled = true;
+}
+
+function revealCorrectAnswer(){
+  const q = questions[current];
+  const choicesSection = document.getElementById('choicesSection');
+  const actionBtns = document.getElementById('actionBtns');
+  
+  // Mostrar resposta correta
   const resultEl = document.createElement('div');
   resultEl.style.cssText = 'margin-top:16px;padding:14px;background:rgba(82,255,190,0.12);border-radius:10px;border-left:4px solid #52ffbe;color:#a3ffcb;font-weight:600';
   
   if(selectedIndex === q.answer){
-    resultEl.innerHTML = '✓ Parabéns! Resposta correta!';
+    resultEl.innerHTML = '✓ Parabéns! Sua resposta está correta!';
   }else{
     resultEl.innerHTML = `✗ Resposta incorreta. A resposta correta era: <strong>${q.choices[q.answer]}</strong>`;
   }
   
-  const choicesSection = document.getElementById('choicesSection');
   const existing = choicesSection.querySelector('div[style*="background:rgba(82,255,190,0.12)"]');
   if(existing) existing.remove();
   choicesSection.appendChild(resultEl);
   
-  document.getElementById('nextBtn').disabled = true;
+  // Marcar como revelado e habilitar próxima
+  answerRevealed = true;
+  actionBtns.style.display = 'none';
+  document.getElementById('nextBtn').disabled = false;
 }
 
 function finishQuiz(){
