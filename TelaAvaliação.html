@@ -1630,6 +1630,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (currentQuestion < questions.length - 1) {
                 currentQuestion++;
                 renderQuestion();
+            } else {
+                showResults();
             }
         });
     }
