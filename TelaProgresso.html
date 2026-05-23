@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Progresso de Aprendizagem</title>
+  <link rel="stylesheet" href="styleMenu.css">
+  <style>
+    .content-area{padding:20px}
+    .assess-list{margin-top:16px}
+    .assess-item{padding:8px;border-bottom:1px solid #eee}
+    .chart-card{background:#fff;padding:12px;border-radius:8px;border:1px solid #e8f3f5}
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <aside class="sidebar">
+
+    <div>
+
+      <div class="logo">
+        <h1>Revisa+</h1>
+        <p>E melhore seus conhecimentos!</p>
+      </div>
+
+      <nav class="menu">
+
+        <ul>
+
+          <li><a href="telamenu.html">🏠 Início</a></li>
+
+          <li><a href="TelaAreaDoAluno.html">👤 Área do aluno</a></li>
+
+          <li><a href="TelaAvaliaçãoDiagnóstica.html">📝 Avaliação Diagnóstica</a></li>
+
+          <li><a href="#">📖 Revisar</a></li>
+
+          <li class="active"><a href="TelaProgresso.html">📈 Progresso de Aprendizagem</a></li>
+
+          <li><a href="TelaSobre.html">ℹ️ Sobre</a></li>
+
+          <li><a href="TelaConfiguracoes.html">⚙️ Configurações</a></li>
+
+        </ul>
+
+      </nav>
+
+    </div>
+
+    <button class="logout" onclick="location.href='telalogin.html'">
+      ↩ Sair
+    </button>
+
+  </aside>
+
+  <main class="content">
+
+    <header class="topbar">
+      <h2>Progresso de Aprendizagem</h2>
+    </header>
+
+    <section class="content-area">
+
+      <div class="chart-card">
+        <canvas id="progressChart" height="120"></canvas>
+      </div>
+
+      <div class="assess-list" id="assessList">
+        <!-- histórico será preenchido aqui -->
+      </div>
+
+    </section>
+
+    <footer>
+      © 2026 Revisa+. Todos os direitos reservados.
+    </footer>
+
+  </main>
+
+</div>
+
+<script src="userSystem.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function(){
+    const assessments = getAssessments() || [];
+
+    // preencher lista
+    const list = document.getElementById('assessList');
+    if(assessments.length === 0){
+      list.innerHTML = '<p>Nenhuma avaliação registrada ainda.</p>';
+    } else {
+      assessments.slice().reverse().forEach(a => {
+        const div = document.createElement('div');
+        div.className = 'assess-item';
+        div.innerHTML = `<strong>${new Date(a.date).toLocaleString()}</strong> — ${a.correct}/${a.total} (${a.scorePercent}%)`;
+        list.appendChild(div);
+      });
+    }
+
+    // criar gráfico
+    const labels = assessments.map(a => new Date(a.date).toLocaleDateString());
+    const data = assessments.map(a => a.scorePercent);
+
+    const ctx = document.getElementById('progressChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Desempenho (%)',
+          data: data,
+          borderColor: '#0b84a5',
+          backgroundColor: 'rgba(11,132,165,0.1)',
+          fill: true,
+          tension: 0.2
+        }]
+      },
+      options: {
+        scales: {
+          y: { beginAtZero: true, max: 100 }
+        }
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

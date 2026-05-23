@@ -5,7 +5,18 @@ const defaultUser = {
     level: 1,
     currentXP: 0,
     totalXP: 0,
-    createdAt: new Date().toISOString()
+    createdAt: new Date().toISOString(),
+    // novos campos de estatísticas
+    streakDays: 0,
+    exercisesCompleted: 0,
+    reviews: {
+        totalReviews: 0,
+        totalCorrect: 0
+    },
+    biography: '',
+    email: '',
+    // histórico de avaliações
+    assessments: []
 };
 
 // Função para calcular XP necessário para atingir um nível
@@ -113,9 +124,89 @@ function getUserInfo() {
         level: user.level,
         currentXP: user.currentXP,
         totalXP: user.totalXP,
+        streakDays: user.streakDays || 0,
+        exercisesCompleted: user.exercisesCompleted || 0,
+        reviews: user.reviews || { totalReviews: 0, totalCorrect: 0 },
+        biography: user.biography || '',
+        email: user.email || '',
         xpForNextLevel: xpNeeded,
         createdAt: user.createdAt
     };
+}
+
+// Biografia editável
+function setBiography(text) {
+    const user = getCurrentUser();
+    if (!user) return false;
+    user.biography = text || '';
+    saveUser(user);
+    return true;
+}
+
+function setEmail(email) {
+    const user = getCurrentUser();
+    if (!user) return false;
+    user.email = email || '';
+    saveUser(user);
+    return true;
+}
+
+function getUserStats() {
+    const user = getCurrentUser();
+    if (!user) return null;
+    const reviews = user.reviews || { totalReviews: 0, totalCorrect: 0 };
+    const avgCorrect = reviews.totalReviews === 0 ? 0 : (reviews.totalCorrect / reviews.totalReviews) * 100;
+    return {
+        streakDays: user.streakDays || 0,
+        exercisesCompleted: user.exercisesCompleted || 0,
+        avgCorrectPercent: avgCorrect,
+        biography: user.biography || ''
+    };
+}
+
+// Funções utilitárias para atualizar estatísticas
+function addExercises(count = 1) {
+    const user = getCurrentUser();
+    if (!user) return false;
+    user.exercisesCompleted = (user.exercisesCompleted || 0) + Math.max(0, count);
+    saveUser(user);
+    return true;
+}
+
+function recordReview(correct, total) {
+    const user = getCurrentUser();
+    if (!user) return false;
+    user.reviews = user.reviews || { totalReviews: 0, totalCorrect: 0 };
+    user.reviews.totalReviews += Math.max(0, total || 0);
+    user.reviews.totalCorrect += Math.max(0, correct || 0);
+    // também registra a avaliação no histórico
+    user.assessments = user.assessments || [];
+    const score = (total && total > 0) ? Math.round((correct / total) * 100) : 0;
+    user.assessments.push({
+        date: new Date().toISOString(),
+        correct: Number(correct) || 0,
+        total: Number(total) || 0,
+        scorePercent: score
+    });
+    saveUser(user);
+    return true;
+}
+
+function addAssessment(correct, total) {
+    const user = getCurrentUser();
+    if (!user) return false;
+    user.assessments = user.assessments || [];
+    const score = (total && total > 0) ? Math.round((correct / total) * 100) : 0;
+    const assessment = { date: new Date().toISOString(), correct: Number(correct) || 0, total: Number(total) || 0, scorePercent: score };
+    user.assessments.push(assessment);
+    saveUser(user);
+    return assessment;
+}
+
+function getAssessments() {
+    const user = getCurrentUser();
+    if (!user) return [];
+    return user.assessments || [];
 }
 
 // Fazer logout (remover usuário)

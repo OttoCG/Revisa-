@@ -9,6 +9,20 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   <link rel="stylesheet" href="styleMenu.css">
+  <style>
+    .bio-card { background:#1d1f39; border:1px solid rgba(82,255,190,0.06); padding:12px; border-radius:8px; }
+    .bio-edit { min-height:90px; padding:10px; background:linear-gradient(180deg,#151628,#12121b); border:1px solid rgba(255,255,255,0.04); border-radius:6px; outline:none; color:#dffaf0 }
+    .bio-edit:focus { box-shadow:0 0 0 4px rgba(82,255,190,0.08); border-color:#52ffbe }
+    .bio-edit:empty:before { content: "Escreva sua biografia..."; color: rgba(255,255,255,0.28); }
+    .btn-primary { padding:6px 10px; border-radius:6px; background:#52ffbe; color:#0b1020; border:none; cursor:pointer }
+    .btn-primary:hover { opacity:0.95 }
+    #profile-email { max-width:280px; padding:8px 10px; background:linear-gradient(180deg,#151628,#12121b); color:#d0f7ea; border:1px solid rgba(255,255,255,0.04); border-radius:6px }
+    #profile-email:focus{ box-shadow:0 0 0 4px rgba(82,255,190,0.06); border-color:#52ffbe }
+    #saveEmail{ background:#52ffbe; color:#0b1020; border:none; padding:8px 10px; border-radius:6px; cursor:pointer }
+    #saveEmail:hover{ opacity:0.95 }
+    .progress-bar{ background:#2a2c4d; border-radius:8px; height:12px; overflow:hidden }
+    .progress{ background:#52ffbe; height:100%; width:0 }
+  </style>
 
 </head>
 
@@ -37,7 +51,7 @@
 
           <li><a href="#">📖 Revisar</a></li>
 
-          <li><a href="#">📈 Progresso de Aprendizagem</a></li>
+          <li><a href="TelaProgresso.html">📈 Progresso de Aprendizagem</a></li>
 
           <li><a href="TelaSobre.html">ℹ️ Sobre</a></li>
 
@@ -64,8 +78,8 @@
       <div class="user">
 
         <div>
-          <h3>Olá, Aluno!</h3>
-          <p>Bem-vindo de volta.</p>
+          <h3>Olá, <span id="user-name">Aluno</span>!</h3>
+          <p id="welcome-text">Bem-vindo de volta.</p>
         </div>
 
         <div class="avatar">
@@ -96,11 +110,14 @@
 
           <span>Nome</span>
 
-          <h3>Lucas Oliveira</h3>
+          <h3 id="profile-name">Lucas Oliveira</h3>
 
           <span>Email</span>
 
-          <p>lucas.oliveira@email.com</p>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <input id="profile-email" type="email" />
+            <button id="saveEmail">Salvar</button>
+          </div>
 
         </div>
 
@@ -113,7 +130,7 @@
         </div>
 
         <div>
-          <h2>1.250</h2>
+          <h2 id="points">0</h2>
           <p>Pontos acumulados</p>
         </div>
 
@@ -129,7 +146,7 @@
           🔥
         </div>
 
-        <h2>7</h2>
+        <h2 id="streakDays">0</h2>
 
         <h3>Sequência de estudos</h3>
 
@@ -143,7 +160,7 @@
           📝
         </div>
 
-        <h2>35</h2>
+        <h2 id="exercisesCompleted">0</h2>
 
         <h3>Exercícios concluídos</h3>
 
@@ -157,7 +174,7 @@
           🏆
         </div>
 
-        <h2>Nível 8</h2>
+        <h2 id="user-level">Nível 1</h2>
 
         <h3>Seu nível atual</h3>
 
@@ -171,11 +188,11 @@
           XP
         </div>
 
-        <h2>820</h2>
+        <h2 id="avgCorrect">0%</h2>
 
-        <h3>Média de XP</h3>
+        <h3>Média de acertos por revisão</h3>
 
-        <p>por atividade</p>
+        <p>percentual médio</p>
 
       </div>
 
@@ -186,12 +203,14 @@
 
       <div class="bottom-card">
 
-        <h3>Resumo geral</h3>
+        <h3>Resumo geral / Biografia</h3>
 
-        <p>
-          Continue estudando para aumentar sua pontuação
-          e avançar de nível.
-        </p>
+        <div class="bio-card">
+          <div contenteditable="true" id="biography" class="bio-edit" aria-label="Biografia do usuário"></div>
+          <div style="margin-top:8px;text-align:right;">
+            <button id="saveBio" class="btn-primary">Salvar biografia</button>
+          </div>
+        </div>
 
       </div>
 
@@ -200,18 +219,59 @@
         <h3>Próximo nível</h3>
 
         <p>
-          Faltam 250 pontos para alcançar o nível 9!
+          Faltam <strong id="xpRemaining">0</strong> pontos para o próximo nível
         </p>
 
         <div class="progress-bar">
           <div class="progress"></div>
         </div>
 
-        <span>1.250 / 1.500 XP</span>
+        <span id="xpCurrent">0 / 0 XP</span>
 
       </div>
 
     </section>
+
+    <script src="userSystem.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function(){
+        const info = getUserInfo() || {};
+        const stats = getUserStats() || {};
+        const xp = getXPProgress() || {};
+
+        document.getElementById('user-name').textContent = info.name || 'Aluno';
+        document.getElementById('profile-name').textContent = info.name || 'Aluno';
+        document.getElementById('points').textContent = info.totalXP || 0;
+        document.getElementById('streakDays').textContent = stats.streakDays || 0;
+        document.getElementById('exercisesCompleted').textContent = stats.exercisesCompleted || 0;
+        document.getElementById('user-level').textContent = 'Nível ' + (info.level || 1);
+        document.getElementById('avgCorrect').textContent = (stats.avgCorrectPercent ? stats.avgCorrectPercent.toFixed(1) : 0) + '%';
+
+        const xpForNext = xp.xpForNextLevel || 0;
+        const currentXP = xp.currentXP || 0;
+        const xpRemaining = Math.max((xpForNext - currentXP), 0);
+        document.getElementById('xpRemaining').textContent = xpRemaining;
+        document.getElementById('xpCurrent').textContent = (currentXP) + ' / ' + (xpForNext) + ' XP';
+        const prog = document.querySelector('.progress');
+        if (prog) prog.style.width = (xp.progressPercentage ? xp.progressPercentage : 0) + '%';
+
+        // biografia (contenteditable)
+        const bioEl = document.getElementById('biography');
+        bioEl.innerText = stats.biography || '';
+        document.getElementById('saveBio').addEventListener('click', function(){
+          setBiography(bioEl.innerText || '');
+          alert('Biografia salva!');
+        });
+
+        // email
+        const emailEl = document.getElementById('profile-email');
+        emailEl.value = info.email || '';
+        document.getElementById('saveEmail').addEventListener('click', function(){
+          setEmail(emailEl.value || '');
+          alert('Email salvo!');
+        });
+      });
+    </script>
 
     <footer>
       © 2026 Revisa+. Todos os direitos reservados.

@@ -806,15 +806,15 @@ body{
         </div>
 
         <div class="difficulty-grid">
-            <button class="difficulty-button" data-level="facil">
+            <button type="button" class="difficulty-button" data-level="facil">
                 <strong>Fácil</strong>
                 <span>Questões de nível Fundamental II</span>
             </button>
-            <button class="difficulty-button" data-level="medio">
+            <button type="button" class="difficulty-button" data-level="medio">
                 <strong>Médio</strong>
                 <span>Questões de nível Ensino Médio</span>
             </button>
-            <button class="difficulty-button" data-level="dificil">
+            <button type="button" class="difficulty-button" data-level="dificil">
                 <strong>Difícil</strong>
                 <span>Questões estilo ENEM / Vestibular</span>
             </button>
@@ -825,7 +825,7 @@ body{
             <strong class="selected-difficulty-name">Nenhum</strong>
         </div>
 
-        <button class="start-quiz-btn" disabled>Iniciar avaliação</button>
+        <button type="button" class="start-quiz-btn" disabled>Iniciar avaliação</button>
 
     </section>
 
@@ -1512,27 +1512,28 @@ const answers = [];
 let xpEarned = 0;
 let levelUpResult = null;
 
-const difficultyScreen = document.querySelector('.difficulty-screen');
-const difficultyButtons = Array.from(document.querySelectorAll('.difficulty-button'));
-const selectedDifficultyName = document.querySelector('.selected-difficulty-name');
-const startQuizBtn = document.querySelector('.start-quiz-btn');
-const statusBar = document.querySelector('.status-bar');
-const mainSection = document.querySelector('.main');
+// Estas variáveis serão inicializadas no DOMContentLoaded
+let difficultyScreen = null;
+let difficultyButtons = [];
+let selectedDifficultyName = null;
+let startQuizBtn = null;
+let statusBar = null;
+let mainSection = null;
 
-const questionCountText = document.querySelector('.question-count');
-const questionTitle = document.querySelector('.question-title');
-const expressionBox = document.querySelector('.expression');
-const answersBox = document.querySelector('.answers');
-const progressText = document.querySelector('.progress-top span');
-const progressBar = document.querySelector('.progress');
-const tipText = document.querySelector('.tip-card p');
-const prevBtn = document.querySelector('.prev-btn');
-const nextBtn = document.querySelector('.next-btn');
-const numberButtons = Array.from(document.querySelectorAll('.number'));
-const questionCard = document.querySelector('.question-card');
-const backBtn = document.querySelector('.back-btn');
-const exitBtn = document.querySelector('.exit-btn');
-const timerDisplay = document.getElementById('timer-display');
+let questionCountText = null;
+let questionTitle = null;
+let expressionBox = null;
+let answersBox = null;
+let progressText = null;
+let progressBar = null;
+let tipText = null;
+let prevBtn = null;
+let nextBtn = null;
+let numberButtons = [];
+let questionCard = null;
+let backBtn = null;
+let exitBtn = null;
+let timerDisplay = null;
 
 let timerInterval = null;
 let timeRemaining = 1200; // 20 minutos em segundos
@@ -1570,18 +1571,96 @@ function selectDifficulty(level, button) {
     startQuizBtn.disabled = false;
 }
 
-difficultyButtons.forEach(button => {
-    button.addEventListener('click', () => selectDifficulty(button.dataset.level, button));
-});
+document.addEventListener('DOMContentLoaded', () => {
+    // Inicializar todas as referências DOM
+    difficultyScreen = document.querySelector('.difficulty-screen');
+    difficultyButtons = Array.from(document.querySelectorAll('.difficulty-button'));
+    selectedDifficultyName = document.querySelector('.selected-difficulty-name');
+    startQuizBtn = document.querySelector('.start-quiz-btn');
+    statusBar = document.querySelector('.status-bar');
+    mainSection = document.querySelector('.main');
 
-startQuizBtn.addEventListener('click', () => {
-    if (currentDifficulty) {
-        // Verificar se usuário está logado
-        if (!isUserLoggedIn()) {
-            location.href = 'telalogin.html';
-            return;
-        }
-        startQuiz(currentDifficulty);
+    questionCountText = document.querySelector('.question-count');
+    questionTitle = document.querySelector('.question-title');
+    expressionBox = document.querySelector('.expression');
+    answersBox = document.querySelector('.answers');
+    progressText = document.querySelector('.progress-top span');
+    progressBar = document.querySelector('.progress');
+    tipText = document.querySelector('.tip-card p');
+    prevBtn = document.querySelector('.prev-btn');
+    nextBtn = document.querySelector('.next-btn');
+    numberButtons = Array.from(document.querySelectorAll('.number'));
+    questionCard = document.querySelector('.question-card');
+    backBtn = document.querySelector('.back-btn');
+    exitBtn = document.querySelector('.exit-btn');
+    timerDisplay = document.getElementById('timer-display');
+
+    // Anexar listeners aos botões de dificuldade
+    difficultyButtons.forEach(button => {
+        button.addEventListener('click', () => selectDifficulty(button.dataset.level, button));
+    });
+
+    // Anexar listener ao botão de iniciar quiz
+    if (startQuizBtn) {
+        startQuizBtn.addEventListener('click', () => {
+            if (currentDifficulty) {
+                if (!isUserLoggedIn()) {
+                    location.href = 'telalogin.html';
+                    return;
+                }
+                startQuiz(currentDifficulty);
+            } else {
+                alert('Por favor, selecione um nível de dificuldade');
+            }
+        });
+    }
+
+    // Anexar listeners aos outros botões
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                renderQuestion();
+            }
+        });
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                renderQuestion();
+            }
+        });
+    }
+
+    numberButtons.forEach((button, index) => {
+        button.addEventListener('click', () => {
+            currentQuestion = index;
+            renderQuestion();
+        });
+    });
+
+    if (backBtn) {
+        backBtn.addEventListener('click', () => {
+            clearInterval(timerInterval);
+            difficultyScreen.classList.remove('hidden');
+            statusBar.classList.add('hidden');
+            mainSection.classList.add('hidden');
+            currentQuestion = 0;
+            currentDifficulty = null;
+            answers.length = 0;
+            questions = [];
+        });
+    }
+
+    if (exitBtn) {
+        exitBtn.addEventListener('click', () => {
+            if (confirm('Tem certeza de que deseja sair? Seu progresso será perdido.')) {
+                clearInterval(timerInterval);
+                location.href = 'telamenu.html';
+            }
+        });
     }
 });
 
@@ -1771,43 +1850,6 @@ function renderReview() {
     });
 }
 
-prevBtn.addEventListener('click', () => {
-    if (currentQuestion > 0) {
-        currentQuestion -= 1;
-        renderQuestion();
-    }
-});
-
-nextBtn.addEventListener('click', () => {
-    if (currentQuestion === questions.length - 1) {
-        showResults();
-        return;
-    }
-    currentQuestion += 1;
-    renderQuestion();
-});
-
-numberButtons.forEach((button, index) => {
-    button.addEventListener('click', () => {
-        currentQuestion = index;
-        renderQuestion();
-    });
-});
-
-backBtn.addEventListener('click', () => {
-    if (timerInterval) {
-        clearInterval(timerInterval);
-    }
-    location.href = 'telamenu.html';
-});
-
-exitBtn.addEventListener('click', () => {
-    if (timerInterval) {
-        clearInterval(timerInterval);
-    }
-    location.href = 'telamenu.html';
-});
-
 // Funções do cronometro
 function formatTime(seconds) {
     const minutes = Math.floor(seconds / 60);
@@ -1846,6 +1888,6 @@ window.addEventListener('load', () => {
         location.href = 'telalogin.html';
     }
 });
-
+</script>
 </body>
 </html>
