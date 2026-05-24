@@ -247,8 +247,6 @@
         font-size:22px;
     }
 
-    /* STATS */
-
     .stats-grid{
         display:grid;
         grid-template-columns:repeat(4,1fr);

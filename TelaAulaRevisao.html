@@ -140,12 +140,11 @@ function showQuestion(){
   // Atualizar progresso
   document.getElementById('progressText').textContent = `Questão ${current+1}/${questions.length}`;
   
-  // Mostrar pergunta
+  // Mostra pergunta
   document.getElementById('questionTitle').textContent = q.question;
   
   // Mostrar explicação e dica ANTES das opções
   const explBefore = document.getElementById('explanationBefore');
-  // split solution into lines and remove any explicit 'Resposta correta' line from shown steps
   let answerLine = '';
   let filteredLines = '';
   if(q.solution){
@@ -154,7 +153,7 @@ function showQuestion(){
     lines.forEach(l => {
       const trimmed = l.trim();
       if(/Resposta correta/i.test(trimmed)){
-        answerLine = trimmed; // store the answer line to reveal later
+        answerLine = trimmed; // armazena a linha da resposta correta para mostrar depois 
       } else if(trimmed.length){
         kept.push(`<div class="step">${trimmed}</div>`);
       }
@@ -169,7 +168,7 @@ function showQuestion(){
     ${filteredLines}
   `;
 
-  // if there was an answer line in the solution, add a hidden reveal button and container
+  // Mostrar explicação antes das opções se existir
   const existingReveal = explBefore.querySelector('#showSolutionBtn');
   if(existingReveal) existingReveal.remove();
   const existingAns = explBefore.querySelector('#solutionAnswerDiv');
@@ -245,7 +244,7 @@ function selectChoice(i){
 function nextQuestion(){
   if(!answersRevealed || selectedIndex === null) return;
   
-  // Se a resposta já foi revelada, avança para próxima pergunta
+  // Se a resposta já foi revelada avança para próxima pergunta
   if(answerRevealed){
     current++;
     selectedIndex = null;
@@ -257,7 +256,7 @@ function nextQuestion(){
   const q = questions[current];
   const choiceEls = document.querySelectorAll('.choice');
   
-  // Marcar respostas
+  // marcar respostas
   choiceEls.forEach((el,idx)=>{
     el.classList.remove('selected');
     el.onclick = null;
@@ -268,7 +267,7 @@ function nextQuestion(){
   
   if(selectedIndex === q.answer) correctCount++;
   
-  // Mostrar resultado
+  // mostrar resultado
   showResult();
 }
 
@@ -277,13 +276,13 @@ function showResult(){
   const choicesSection = document.getElementById('choicesSection');
   const actionBtns = document.getElementById('actionBtns');
   
-  // Desabilitar cliques nas opções
+  // desabilitar cliques nas opções
   document.querySelectorAll('.choice').forEach(c=>{
     c.onclick = null;
     c.classList.add('disabled');
   });
   
-  // Mostrar botão para revelar resposta
+  // mostrar botão para revelar resposta
   actionBtns.style.display = 'flex';
   const revealBtn = document.getElementById('revealAnswerBtn');
   revealBtn.disabled = false;
@@ -299,7 +298,7 @@ function revealCorrectAnswer(){
   const choicesSection = document.getElementById('choicesSection');
   const actionBtns = document.getElementById('actionBtns');
   
-  // Mostrar resposta correta
+  // mostrar a resposta correta
   const resultEl = document.createElement('div');
   resultEl.style.cssText = 'margin-top:16px;padding:14px;background:rgba(82,255,190,0.12);border-radius:10px;border-left:4px solid #52ffbe;color:#a3ffcb;font-weight:600';
   
@@ -313,7 +312,7 @@ function revealCorrectAnswer(){
   if(existing) existing.remove();
   choicesSection.appendChild(resultEl);
   
-  // Marcar como revelado e habilitar próxima
+  // marcar como revelado e habilitar próxima
   answerRevealed = true;
   actionBtns.style.display = 'none';
   document.getElementById('nextBtn').disabled = false;

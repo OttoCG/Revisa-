@@ -5,11 +5,11 @@ Thumbs.db
 # Configurações do VSCode
 .vscode/
 
-# Node modules (caso use futuramente)
+# Node modules (caso nós usamos futuramente)
 node_modules/
 
 # Arquivos de ambiente
 .env
 
-# Logs
+# Logs do console
 *.log

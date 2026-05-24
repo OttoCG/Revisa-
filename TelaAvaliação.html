@@ -719,6 +719,8 @@ body{
 
 }
 
+   /* CARA ESSE ERRO EU NÃO SEI RESOLVER, EU ME SEDI A USAR ATÉ IA MAS NEM ELA SABE, FICA CARREGANDO INFINITO  */
+
 @media(max-width:768px){
 
     html,
@@ -1511,7 +1513,8 @@ const answers = [];
 let xpEarned = 0;
 let levelUpResult = null;
 
-// Estas variáveis serão inicializadas no DOMContentLoaded
+// Estas variáveis serão inicializadas no DOMContentLoaded 
+// DOMContentLoaded ele faz o código só ser carregado depois de carregar o HTML, serve para evitar erros :D
 let difficultyScreen = null;
 let difficultyButtons = [];
 let selectedDifficultyName = null;
@@ -1535,10 +1538,10 @@ let exitBtn = null;
 let timerDisplay = null;
 
 let timerInterval = null;
-let timeRemaining = 1200; // 20 minutos em segundos
+let timeRemaining = 1200; // 20 minutos em segundos podemos ajustar esse tempo em uma reunião
 
 function startQuiz(level) {
-    // Verificar se usuário está logado
+    // Verificar se usuário está logado antes de iniciar a avaliação
     if (!isUserLoggedIn()) {
         location.href = 'telalogin.html';
         return;
@@ -1551,9 +1554,9 @@ function startQuiz(level) {
         answers.push(null);
     }
     currentQuestion = 0;
-    timeRemaining = 1200; // Reinicia com 20 minutos
+    timeRemaining = 1200; // Reinicia com 20 minutos 
     
-    // Adicionar 50 XP ao iniciar a avaliação
+    // Adicionar 50 XP ao iniciar a avaliação, podemos decidir a quantidade de XP em uma reunião
     xpEarned = 50;
     
     difficultyScreen.classList.add('hidden');
