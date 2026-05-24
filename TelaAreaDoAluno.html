@@ -10,18 +10,105 @@
 
   <link rel="stylesheet" href="styleMenu.css">
   <style>
-    .bio-card { background:#1d1f39; border:1px solid rgba(82,255,190,0.06); padding:12px; border-radius:8px; }
-    .bio-edit { min-height:90px; padding:10px; background:linear-gradient(180deg,#151628,#12121b); border:1px solid rgba(255,255,255,0.04); border-radius:6px; outline:none; color:#dffaf0 }
-    .bio-edit:focus { box-shadow:0 0 0 4px rgba(82,255,190,0.08); border-color:#52ffbe }
-    .bio-edit:empty:before { content: "Escreva sua biografia..."; color: rgba(255,255,255,0.28); }
-    .btn-primary { padding:6px 10px; border-radius:6px; background:#52ffbe; color:#0b1020; border:none; cursor:pointer }
-    .btn-primary:hover { opacity:0.95 }
-    #profile-email { max-width:280px; padding:8px 10px; background:linear-gradient(180deg,#151628,#12121b); color:#d0f7ea; border:1px solid rgba(255,255,255,0.04); border-radius:6px }
-    #profile-email:focus{ box-shadow:0 0 0 4px rgba(82,255,190,0.06); border-color:#52ffbe }
-    #saveEmail{ background:#52ffbe; color:#0b1020; border:none; padding:8px 10px; border-radius:6px; cursor:pointer }
-    #saveEmail:hover{ opacity:0.95 }
-    .progress-bar{ background:#2a2c4d; border-radius:8px; height:12px; overflow:hidden }
-    .progress{ background:#52ffbe; height:100%; width:0 }
+    /* Local adjustments to match the site's dark neon theme and the provided layout */
+    .profile-card{
+      background:linear-gradient(180deg,#121936,#0e1430);
+      border-radius:28px;
+      padding:22px 28px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+      border:1px solid rgba(255,255,255,0.04);
+    }
+
+    .profile-left{ display:flex; align-items:center; gap:18px }
+
+    .profile-left img{
+      width:120px;
+      height:120px;
+      border-radius:50%;
+      border:4px solid #52ffbe;
+      object-fit:cover;
+      box-shadow:0 6px 18px rgba(0,0,0,0.4);
+    }
+
+    .profile-info span{ color:#cfe8e3; font-size:13px }
+
+    .profile-info h3{
+      font-size:34px;
+      margin:6px 0 10px;
+      color:#ffffff;
+      font-weight:800;
+    }
+
+    .profile-info .email-row{ display:flex; gap:10px; align-items:center }
+
+    #profile-email{
+      max-width:420px;
+      padding:10px 14px;
+      background:#17223b;
+      color:#d0f7ea;
+      border:1px solid rgba(255,255,255,0.04);
+      border-radius:10px;
+    }
+
+    #saveEmail{
+      background:linear-gradient(90deg,#3ee8b1,#52ffbe);
+      color:#081017;
+      border:none;
+      padding:8px 12px;
+      border-radius:10px;
+      cursor:pointer;
+      font-weight:700;
+    }
+
+    .profile-right{ display:flex; align-items:center; gap:14px }
+
+    .points-icon{ width:96px; height:96px; border-radius:50%; display:flex; align-items:center; justify-content:center; border:3px solid rgba(82,255,190,0.12); }
+
+    .profile-right h2{ font-size:44px; color:#52ffbe; margin:0 }
+
+    /* Stats grid */
+    .stats-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin-top:18px }
+
+    .stat-card{
+      background:linear-gradient(180deg,#121936,#0e1430);
+      border-radius:18px;
+      padding:24px;
+      text-align:center;
+      border:1px solid rgba(255,255,255,0.04);
+    }
+
+    .stat-icon{ width:64px; height:64px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:rgba(255,255,255,0.03); margin:0 auto 12px; font-size:28px }
+
+    .stat-card h2{ font-size:28px; margin:8px 0; color:#fff }
+
+    .stat-card h3{ font-size:16px; color:#d0d0d0; margin:6px 0 }
+
+    /* Bottom section */
+    .bottom-grid{ display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:20px }
+
+    .bio-card{ background:linear-gradient(180deg,#121936,#0e1430); border-radius:18px; padding:18px; border:1px solid rgba(255,255,255,0.04) }
+
+    .bio-edit{ min-height:120px; padding:14px; background:#151628; border-radius:10px; color:#dffaf0; border:1px solid rgba(255,255,255,0.04); }
+
+    .btn-primary{ padding:8px 12px; border-radius:10px; background:linear-gradient(90deg,#3ee8b1,#52ffbe); color:#081017; border:none }
+
+    .progress-bar{ background:#17223b; border-radius:12px; height:12px; overflow:hidden; border:1px solid rgba(255,255,255,0.03); }
+
+    .progress{ background:#52ffbe; height:100%; width:0; transition:width .4s ease }
+
+    @media(max-width:1100px){
+      .stats-grid{ grid-template-columns:repeat(2,1fr) }
+      .bottom-grid{ grid-template-columns:1fr }
+    }
+
+    @media(max-width:720px){
+      .profile-card{ flex-direction:column; align-items:flex-start }
+      .profile-right{ width:100%; display:flex; justify-content:space-between }
+      .stats-grid{ grid-template-columns:1fr }
+    }
   </style>
 
 </head>

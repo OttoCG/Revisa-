@@ -1,5 +1,4 @@
-﻿
-*{
+﻿*{
     margin:0;
     padding:0;
     box-sizing:border-box;
@@ -11,6 +10,7 @@ body{
     color:#fff;
     min-height:100vh;
     width:100%;
+    overflow-x:hidden;
 }
 
 .container{
@@ -20,32 +20,31 @@ body{
     overflow:hidden;
 }
 
-/* SIDEBAR */
 .sidebar{
-    width:280px;
-    min-width:280px;
+    width:240px;
+    min-width:240px;
     background:linear-gradient(180deg, #121936, #0e1430);
-    padding:30px 24px;
+    padding:20px 16px;
     display:flex;
     flex-direction:column;
     justify-content:space-between;
-    border-right:1px solid rgba(255,255,255,0.06);
+    border-right:1px solid rgba(255,255,255,0.05);
 }
 
 .logo h1{
     color:#52ffbe;
-    font-size:42px;
-    margin-bottom:10px;
+    font-size:32px;
+    margin-bottom:8px;
 }
 
 .logo p{
     color:#aaffd7;
-    line-height:1.6;
-    font-size:15px;
+    line-height:1.5;
+    font-size:13px;
 }
 
 .menu{
-    margin-top:40px;
+    margin-top:50px;
 }
 
 .menu ul{
@@ -53,57 +52,61 @@ body{
 }
 
 .menu li{
-    margin-bottom:14px;
+    padding:18px;
+    margin-bottom:15px;
+    border-radius:18px;
+    border:1px solid rgba(255,255,255,0.15);
+    transition:0.3s;
 }
 
 .menu li a{
     display:block;
-    padding:16px 18px;
-    border-radius:16px;
-    border:1px solid rgba(255,255,255,0.12);
+    width:100%;
     color:inherit;
     text-decoration:none;
-    transition:all .25s ease;
 }
 
-.menu li a:hover,
-.menu li:hover > a{
+.menu li:hover{
     background:#52ffbe;
     color:#111;
     border-color:#52ffbe;
-    transform:translateX(4px);
-    box-shadow:0 0 14px rgba(82,255,190,0.28);
+    transform:translateX(5px);
+    box-shadow:0 0 15px rgba(82,255,190,0.35);
 }
 
-.menu li.active > a{
-    background:rgba(82,255,190,0.14);
-    border-color:#52ffbe!important;
+.menu li.active{
+    background:rgba(82,255,190,0.12);
+    border-color:#52ffbe !important;
     color:#52ffbe;
 }
 
 .logout{
-    height:55px;
+    height:46px;
     border:none;
-    border-radius:16px;
+    padding:10px 12px;
+    border-radius:14px;
     background:transparent;
-    border:1px solid rgba(255,255,255,0.2);
-    color:#fff;
-    font-size:17px;
+    border:1px solid rgba(255,255,255,0.12);
+    color:white;
+    font-size:13px;
     cursor:pointer;
-    transition:0.3s ease;
+    transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+    box-shadow:0 6px 18px rgba(11,16,32,0.25);
 }
 
 .logout:hover{
-    background:#52ffbe;
-    color:#111;
+    background:linear-gradient(90deg,#3ee8b1,#52ffbe);
+    color:#081017;
+    transform:translateY(-3px);
+    box-shadow:0 18px 40px rgba(82,255,190,0.12);
 }
 
 .content{
     flex:1;
     display:flex;
     flex-direction:column;
-    padding:32px 36px;
-    gap:24px;
+    padding:24px 26px;
+    gap:20px;
     overflow:auto;
 }
 
@@ -142,20 +145,20 @@ body{
 }
 
 .welcome{
-    padding:28px 32px;
+    padding:22px 24px;
     background:linear-gradient(135deg, rgba(82,255,190,0.12), rgba(16,28,58,0.92));
     border:1px solid rgba(82,255,190,0.18);
-    border-radius:28px;
+    border-radius:24px;
 }
 
 .welcome h2{
-    font-size:48px;
+    font-size:42px;
     color:#52ffbe;
 }
 
 .welcome p{
     margin-top:12px;
-    font-size:20px;
+    font-size:18px;
     color:#d5e1f0;
     max-width:760px;
     line-height:1.7;
@@ -163,8 +166,8 @@ body{
 
 .main-grid{
     display:grid;
-    grid-template-columns:1.45fr 1fr;
-    gap:24px;
+    grid-template-columns:1.35fr 0.75fr;
+    gap:20px;
     flex:1;
     min-height:0;
 }
@@ -173,22 +176,22 @@ body{
 .right{
     display:flex;
     flex-direction:column;
-    gap:22px;
+    gap:18px;
     min-height:0;
 }
 
 .card{
-    background:#1d1f39;
-    border-radius:28px;
-    padding:28px;
-    border:1px solid rgba(255,255,255,0.08);
-    box-shadow:0 20px 40px rgba(0,0,0,0.14);
+    background:linear-gradient(180deg,#121936,#0e1430);
+    border-radius:24px;
+    padding:24px;
+    border:1px solid rgba(255,255,255,0.05);
+    box-shadow:0 20px 40px rgba(0,0,0,0.18);
     transition:transform .25s ease, border-color .25s ease;
 }
 
 .card:hover{
     transform:translateY(-4px);
-    border-color:rgba(82,255,190,0.22);
+    border-color:rgba(82,255,190,0.18);
 }
 
 .card h2{
@@ -197,10 +200,14 @@ body{
     margin-bottom:18px;
 }
 
-.about-content{
+.about-card{
     display:grid;
     gap:20px;
+    background:linear-gradient(180deg,#121936,#0e1430);
+    border:1px solid rgba(255,255,255,0.06);
 }
+
+.about-left{}
 
 .about-list{
     list-style:none;
@@ -209,8 +216,8 @@ body{
 
 .about-list li{
     margin-bottom:12px;
-    font-size:17px;
-    color:#d7e6ff;
+    font-size:16px;
+    color:#cfdfea;
 }
 
 .about-text{
@@ -228,18 +235,19 @@ body{
     width:220px;
     height:48px;
     border:none;
-    border-radius:16px;
-    background:#52ffbe;
+    border-radius:14px;
+    background:linear-gradient(90deg,#3ee8b1,#52ffbe);
     color:#081017;
     font-size:15px;
     font-weight:700;
     cursor:pointer;
-    transition:transform .2s ease, box-shadow .2s ease;
+    transition:transform .18s ease, box-shadow .18s ease, opacity .12s ease;
+    box-shadow:0 12px 28px rgba(82,255,190,0.12);
 }
 
 .start-btn:hover{
-    transform:translateY(-2px);
-    box-shadow:0 18px 32px rgba(82,255,190,0.25);
+    transform:translateY(-4px);
+    box-shadow:0 20px 48px rgba(82,255,190,0.18);
 }
 
 .subject-grid{
@@ -249,10 +257,15 @@ body{
 }
 
 .subject{
-    background:#141b34;
-    border-radius:22px;
-    padding:20px;
-    border:1px solid rgba(255,255,255,0.08);
+    background:linear-gradient(180deg,#121936,#0e1430);
+    border-radius:20px;
+    padding:18px;
+    border:1px solid rgba(255,255,255,0.05);
+    transition:transform .25s ease;
+}
+
+.subject:hover{
+    transform:translateY(-3px);
 }
 
 .subject h3{
@@ -323,10 +336,10 @@ body{
 }
 
 .recommend-item{
-    background:#141b34;
-    border-radius:22px;
-    padding:20px;
-    border:1px solid rgba(255,255,255,0.08);
+    background:linear-gradient(180deg,#121936,#0e1430);
+    border-radius:20px;
+    padding:18px;
+    border:1px solid rgba(255,255,255,0.05);
 }
 
 .recommend-item h3{
@@ -380,7 +393,7 @@ footer{
     }
 
     .content{
-        padding:24px 24px;
+        padding:24px;
     }
 
     .main-grid{
@@ -390,11 +403,11 @@ footer{
 
 @media(max-width:720px){
     .content{
-        padding:18px 18px;
+        padding:18px;
     }
 
     .welcome{
-        padding:22px 18px;
+        padding:20px 18px;
         border-radius:22px;
     }
 

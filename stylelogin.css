@@ -1,189 +1,179 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
-
-/*Comentários de Otto para ajudar o pessoal a se guiar*/
+﻿@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 *, *::before, *::after {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-    margin: 0; /* tirar margem base do html */
-    font-family: 'Roboto', sans-serif; /* definir a fonte para o corpo do documento caso a importada acima não seja carregada */
     min-height: 100vh;
     width: 100%;
+    font-family: 'Poppins', sans-serif;
     background: #0f1020;
+    color: #fff;
 }
 
-.main-login{
+.main-login {
     width: 100%;
-    min-height: 100vh; /* viewport height - 100vh é 100% da tela em vertical */
-    background: #0f1020;
-    display: flex; /* deixar div lado a lado */
-    justify-content: center; /* centraliza no eixo X para o centro */
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-.left-login{
-    width: 50%;
     min-height: 100vh;
+    background: #0f1020;
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column; /*deixa um ao lado do outro em coluna*/
-    padding: 40px 20px;
+    flex-wrap: wrap;
+    padding: 20px;
 }
 
-.left-login > h1 { /*chamar só os H1 dentro da left-login*/
-    font-size: clamp(2rem, 3vw, 4rem); /*definir o tamanho da fonte em relação à largura da tela */
-    color: #77ffc0;
+.left-login,
+.right-login {
+    width: 100%;
+    max-width: 520px;
+    min-height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.left-login {
+    flex-direction: column;
+    gap: 24px;
     text-align: center;
 }
 
+.left-login > h1 {
+    font-size: clamp(2.5rem, 4vw, 5rem);
+    color: #52ffbe;
+}
+
 .left-login > img {
-    width: 50%; /*definir a largura da imagem para 50% do contêiner pai*/
+    width: 60%;
     max-width: 320px;
     height: auto;
-    margin-top: 20px; /*adicionar uma margem superior para separar a imagem do texto*/
 }
 
-.right-login{
-    width: 50%;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 40px 20px;
-}
-
-.card-login{
-    width: 60%; /*% pega referente ao total da DIV que ela está*/
+.card-login {
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    padding: 30px 35px;  /*margens dentro do componente, eixo Y e X*/
-    background: #2f2841;
-    border-radius: 20px; /* borca da DIV arredondada */
-    box-shadow: 0px 10px 40px #00000056; /* sombra do card, primeiro valor X, segundo para cima, negativo para cima, terceiro valor blur, quarto é cor */
+    padding: 32px;
+    background: linear-gradient(180deg, #121936, #0e1430);
+    border-radius: 28px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+    border: 1px solid rgba(82,255,190,0.12);
 }
 
 .card-login > h1 {
-    color: #00ff88;
-    font-weight: 800; /* grossura da fonte */
-    margin: 0;
-    border-bottom: 2px solid #00ff88; /* borda inferior do título */
-    
+    color: #52ffbe;
+    font-weight: 800;
+    margin-bottom: 24px;
 }
 
 .textfield {
-    display: flex;
-    flex-direction: column; /* alignitems refere-se ao eixo Y e justify content ao eixo X, ao utlizar flex direction, inverte os eixos, ou seja, alignitems passa a ser o eixo X e justify content o eixo Y */
-    align-items: flex-start; /* alinha os itens no início do eixo X  esquerda*/
-    justify-content: center;
-    margin: 10px 0px;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 12px 0;
+}
+
+.textfield > label {
+    color: #cfe8e3;
+    font-size: 14px;
 }
 
 .textfield > input {
     width: 100%;
     border: none;
-    border-radius: 10px;
-    padding: 15px;
-    background: #514869;
-    color: #f0ffffde;
-    font-size: 12pt;
-    box-shadow: 0px 10px 40px #00000056;
-    outline: none; /* tirar borda azul do input quando clicar */
-    box-sizing: border-box; /* para o padding não aumentar o tamanho do input, DIV filho e DIV pai */
-}
-
-.textfield > label {
-    color: #f0ffffde;
-    margin-bottom: 10px;
-}
-
-.textfield > input::placeholder { /* estilizar o placeholder do input */
-    color: #f0ffff94;
-    opacity: 1; /* para o placeholder ficar com a cor definida, por padrão ele tem uma opacidade de 0.5 */
-}
-
-.btn-login {
-    flex: 1;
-    padding: 16px 0px;
-    border: none;
-    border-radius: 8px;
+    border-radius: 14px;
+    padding: 16px 18px;
+    background: #17223b;
+    color: #eef8f5;
+    font-size: 14pt;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
     outline: none;
-    text-transform: uppercase; /* deixar o texto do botão em maiúsculo */
-    background: #00ff88;
-    color: #2b134b;
-    font-size: 12pt;
-    font-weight: 800;
-    letter-spacing: 3px;
-    cursor: pointer; /* mudar o cursor para indicar que é clicável */
-    box-shadow: 0px 10px 40px -12px #00000056;
 }
 
-.btn-login:hover { /* efeito de hover para o botão */
-    background: #00e077;
+.textfield > input::placeholder {
+    color: rgba(255,255,255,0.65);
 }
 
 .button-container {
     display: flex;
     gap: 15px;
     width: 100%;
-    margin-top: 25px;
-    justify-content: space-between;
+    margin-top: 24px;
+    flex-wrap: wrap;
+}
+
+.btn-login,
+.btn-register {
+    flex: 1;
+    min-width: 140px;
+    padding: 16px 0;
+    border: none;
+    border-radius: 14px;
+    font-size: 13pt;
+    font-weight: 700;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: transform .18s ease, box-shadow .18s ease, opacity .18s ease;
+}
+
+.btn-login {
+    background: linear-gradient(90deg, #3ee8b1, #52ffbe);
+    color: #081017;
+    box-shadow: 0 18px 36px rgba(82,255,190,0.18);
 }
 
 .btn-register {
-    flex: 1;
-    padding: 16px 0px;
-    border: none;
-    border-radius: 8px;
-    outline: none;
-    text-transform: uppercase;
-    background: #00e077;
-    color: #2b134b;
-    font-size: 12pt;
-    font-weight: 800;
-    letter-spacing: 3px;
-    cursor: pointer;
-    box-shadow: 0px 10px 40px -12px #00000056;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.18);
+    color: #fff;
 }
 
-.btn-login:hover {
-    background: #6b5b7a;
-}
+.btn-login:hover,
 .btn-register:hover {
-    background: #6b5b7a;
+    transform: translateY(-2px);
+    opacity: 0.95;
+}
+
+.btn-register:hover {
+    background: rgba(82,255,190,0.12);
+    border-color: #52ffbe;
 }
 
 @media (max-width: 900px) {
+    .main-login {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
     .left-login,
     .right-login {
         width: 100%;
-        min-height: auto;
-        padding: 25px 15px;
+        max-width: 100%;
+        padding: 20px 10px;
     }
 
     .card-login {
         width: 100%;
-        max-width: 520px;
     }
 
     .button-container {
         flex-direction: column;
-        gap: 12px;
     }
 }
 
 @media (max-width: 520px) {
     .card-login {
-        padding: 24px 20px;
+        padding: 24px 18px;
     }
 
     .textfield > input {
-        font-size: 11pt;
+        font-size: 12pt;
     }
 }

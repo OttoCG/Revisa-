@@ -68,7 +68,6 @@
       </div>
 
       <div class="assess-list" id="assessList">
-        <!-- histórico será preenchido aqui -->
       </div>
 
     </section>
@@ -87,7 +86,6 @@
   document.addEventListener('DOMContentLoaded', function(){
     const assessments = getAssessments() || [];
 
-    // preencher lista
     const list = document.getElementById('assessList');
     if(assessments.length === 0){
       list.innerHTML = '<p>Nenhuma avaliação registrada ainda.</p>';
@@ -100,7 +98,6 @@
       });
     }
 
-    // criar gráfico
     const labels = assessments.map(a => new Date(a.date).toLocaleDateString());
     const data = assessments.map(a => a.scorePercent);
 

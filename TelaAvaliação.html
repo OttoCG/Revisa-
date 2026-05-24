@@ -1812,7 +1812,10 @@ function renderReview() {
                 <strong>Questão ${index + 1}:</strong>
                 <span>${question.title}</span>
                 <span>Resposta escolhida: ${answerText}</span>
-                <span>Resposta correta: ${correctText}</span>
+                <div style="display:flex;gap:8px;align-items:center;">
+                  <button class="show-correct-btn" data-index="${index}" style="padding:6px 10px;border-radius:8px;border:1px solid #ffd54d;background:transparent;color:#ffd54d;cursor:pointer;font-weight:600">Mostrar resposta correta</button>
+                  <span id="correct-${index}" class="hidden" style="font-weight:700;color:#ffd54d">${correctText}</span>
+                </div>
             </div>
         `;
     }).join('');
@@ -1833,6 +1836,19 @@ function renderReview() {
             <button class="next-btn" id="finish-btn">Voltar ao início</button>
         </div>
     `;
+
+    // attach reveal handlers for each review item
+    document.querySelectorAll('.show-correct-btn').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+            const idx = btn.getAttribute('data-index');
+            const span = document.getElementById('correct-' + idx);
+            if(span){
+                span.classList.remove('hidden');
+                btn.disabled = true;
+                btn.style.opacity = '0.6';
+            }
+        });
+    });
 
     document.getElementById('restart-review-btn').addEventListener('click', () => {
         if (timerInterval) {

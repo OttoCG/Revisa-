@@ -23,6 +23,8 @@ body{font-family:'Poppins',sans-serif;background:#0f1020;color:#fff;overflow:aut
 .explanation-before .step{margin:8px 0;padding-left:14px;border-left:3px solid #52ffbe}
 .reveal-btn{margin:20px 0;padding:12px 24px;background:linear-gradient(90deg,#3ee8b1,#52ffbe);color:#081017;border:none;border-radius:12px;font-weight:700;cursor:pointer;transition:transform .2s ease, box-shadow .2s ease;box-shadow:0 10px 24px rgba(82,255,190,0.12)}
 .reveal-btn:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(82,255,190,0.16)}
+.reveal-solution-btn{margin-top:12px;padding:8px 14px;background:transparent;border:2px solid #52ffbe;color:#52ffbe;border-radius:10px;cursor:pointer;font-size:13px;font-weight:600}
+.reveal-solution-btn:hover{background:rgba(82,255,190,0.06)}
 .choices-section{display:none;margin-top:20px}
 .choices-section.show{display:block}
 .choices{display:flex;flex-direction:column;gap:12px}
@@ -143,13 +145,60 @@ function showQuestion(){
   
   // Mostrar explicação e dica ANTES das opções
   const explBefore = document.getElementById('explanationBefore');
-  const solutionLines = q.solution ? q.solution.split('\n').map(line => `<div class="step">${line}</div>`).join('') : '';
+  // split solution into lines and remove any explicit 'Resposta correta' line from shown steps
+  let answerLine = '';
+  let filteredLines = '';
+  if(q.solution){
+    const lines = q.solution.split('\n');
+    const kept = [];
+    lines.forEach(l => {
+      const trimmed = l.trim();
+      if(/Resposta correta/i.test(trimmed)){
+        answerLine = trimmed; // store the answer line to reveal later
+      } else if(trimmed.length){
+        kept.push(`<div class="step">${trimmed}</div>`);
+      }
+    });
+    filteredLines = kept.join('');
+  }
+
   explBefore.innerHTML = `
     <strong>💡 Dica para resolver:</strong>
     <div style="margin: 8px 0;">${q.tip}</div>
     <strong>📖 Como resolver passo-a-passo:</strong>
-    ${solutionLines}
+    ${filteredLines}
   `;
+
+  // if there was an answer line in the solution, add a hidden reveal button and container
+  const existingReveal = explBefore.querySelector('#showSolutionBtn');
+  if(existingReveal) existingReveal.remove();
+  const existingAns = explBefore.querySelector('#solutionAnswerDiv');
+  if(existingAns) existingAns.remove();
+  if(answerLine){
+    const btn = document.createElement('button');
+    btn.id = 'showSolutionBtn';
+    btn.className = 'reveal-solution-btn';
+    btn.textContent = 'Mostrar resposta correta';
+    btn.onclick = ()=>{
+      const div = document.getElementById('solutionAnswerDiv') || document.createElement('div');
+      div.id = 'solutionAnswerDiv';
+      div.style.marginTop = '12px';
+      div.style.padding = '12px';
+      div.style.background = 'rgba(255,255,255,0.03)';
+      div.style.borderRadius = '10px';
+      div.style.borderLeft = '4px solid rgba(255,255,255,0.06)';
+      div.style.color = '#ffd6b3';
+      div.style.fontWeight = '700';
+      div.innerHTML = answerLine;
+      if(!document.getElementById('solutionAnswerDiv')){
+        explBefore.appendChild(div);
+      }
+      btn.disabled = true;
+      btn.style.opacity = '0.6';
+    };
+    explBefore.appendChild(btn);
+  }
+
   explBefore.style.display = 'block';
   
   // Mostrar botão para revelar opções
